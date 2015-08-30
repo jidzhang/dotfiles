@@ -71,6 +71,19 @@ nmap <S-CR> i<CR><ESC>
 imap <S-CR> <C-o>o
 imap <C-CR> <C-o>O
 
+" setting for quickhl
+nmap <Space>m <Plug>(quickhl-manual-this)
+xmap <Space>m <Plug>(quickhl-manual-this)
+nmap <Space>M <Plug>(quickhl-manual-reset)
+xmap <Space>M <Plug>(quickhl-manual-reset)
+
+" setting for nerdtree
+nmap <Space>ft :NERDTreeToggle<CR>
+
+nmap <Space>bd :bd<CR>
+nmap <Space>bn :bn<CR>
+nmap <Space>fs :w<CR>
+
 "a shortcut for inserting datetime
 iabbrev dts <C-R>=strftime("%H:%M %m/%d/%Y")<CR>
 
@@ -122,10 +135,12 @@ if has("gui")
   "colo molokai
   set lines=25 columns=80
   set guioptions=
+  set guioptions+=m
   "set guioptions -=T
+  "set guioptions -=r
   "set guioptions +=b
   "set guifont=courier_new:h10
-  set guifont=Monaco:h12
+  "set guifont=Monaco:h10
 else
   "colo blue
   colo default
@@ -153,7 +168,7 @@ if has("multi_byte")
   if getfsize(expand("%")) > 0
     set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
   else
-    set fileencodings=cp936,big5,euc-jp,euc-kr,latin1
+    set fileencodings=utf-8,cp936,big5,euc-jp,euc-kr,latin1
   endif
   "" CJK environment detection and corresponding setting
   if v:lang =~ "^zh_CN"
@@ -240,6 +255,11 @@ Plugin 'terryma/vim-multiple-cursors'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'vimchina/vimcdoc'
 Plugin 'vimchina/vim-fencview'
+"html & css & javascript
+"Plugin 'maksimr/vim-jsbeautify'
+"Plugin 'einars/js-beautify'
+"Plugin 'wookiehangover/jshint.vim'
+"Plugin 'joestelmach/lint.vim'
 
 " vim-scripts repos
 "https://github.com/vim-scripts/xx.git
@@ -366,15 +386,6 @@ let g:vim_markdown_folding_disabled=1
 "colo evening
 "colo default
 
-" setting for quickhl
-nmap <Space>m <Plug>(quickhl-manual-this)
-xmap <Space>m <Plug>(quickhl-manual-this)
-nmap <Space>M <Plug>(quickhl-manual-reset)
-xmap <Space>M <Plug>(quickhl-manual-reset)
-
-" setting for nerdtree
-nmap <Space>ft :NERDTreeToggle<CR>
-
 " filetype indentation
 if has("autocmd")
 	filetype on
@@ -387,3 +398,18 @@ endif
 " enable emmet just for html/css
 let g:user_emmet_install_global=0
 autocmd FileType html,css EmmetInstall
+
+"JSHint
+"let JSHintUpdateWriteOnly=1
+
+" jsbeautify
+map <leader>ff :call JsBeautify()<cr>
+" or
+"autocmd FileType javascript noremap <buffer>  <c-f> :call JsBeautify()<cr>
+" for html
+"autocmd FileType html noremap <buffer> <c-f> :call HtmlBeautify()<cr>
+" for css or scss
+"autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
+autocmd FileType javascript vnoremap <buffer>  <c-f> :call RangeJsBeautify()<cr>
+autocmd FileType html vnoremap <buffer> <c-f> :call RangeHtmlBeautify()<cr>
+autocmd FileType css vnoremap <buffer> <c-f> :call RangeCSSBeautify()<cr>
