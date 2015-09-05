@@ -3,42 +3,42 @@ source $VIMRUNTIME/vimrc_example.vim
 source $VIMRUNTIME/macros/matchit.vim
 
 if(has("win32") || has("win95") || has("win64") || has("win16"))
-  let g:vimrc_iswindows=1
+	let g:vimrc_iswindows=1
 else
-  let g:vimrc_iswindows=0
+	let g:vimrc_iswindows=0
 endif
 if (g:vimrc_iswindows)
-  source $VIMRUNTIME/mswin.vim
-  behave mswin
-  set diffexpr=MyDiff()
-  function MyDiff()
-    let opt = '-a --binary '
-    if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
-    if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
-    let arg1 = v:fname_in
-    if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
-    let arg2 = v:fname_new
-    if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
-    let arg3 = v:fname_out
-    if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
-    if $VIMRUNTIME =~ ' '
-      if &sh =~ '\<cmd'
-        if empty(&shellxquote)
-          let l:shxq_sav = ''
-          set shellxquote&
-        endif
-        let cmd = '"' . $VIMRUNTIME . '\diff"'
-      else
-        let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
-      endif
-    else
-      let cmd = $VIMRUNTIME . '\diff'
-    endif
-    silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3
-    if exists('l:shxq_sav')
-      let &shellxquote=l:shxq_sav
-    endif
-  endfunction
+	source $VIMRUNTIME/mswin.vim
+	behave mswin
+	set diffexpr=MyDiff()
+	function MyDiff()
+		let opt = '-a --binary '
+		if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
+		if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
+		let arg1 = v:fname_in
+		if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
+		let arg2 = v:fname_new
+		if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
+		let arg3 = v:fname_out
+		if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
+		if $VIMRUNTIME =~ ' '
+			if &sh =~ '\<cmd'
+				if empty(&shellxquote)
+					let l:shxq_sav = ''
+					set shellxquote&
+				endif
+				let cmd = '"' . $VIMRUNTIME . '\diff"'
+			else
+				let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
+			endif
+		else
+			let cmd = $VIMRUNTIME . '\diff'
+		endif
+		silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3
+		if exists('l:shxq_sav')
+			let &shellxquote=l:shxq_sav
+		endif
+	endfunction
 endif    "for windows only
 "--------------------------------------------
 " General setting
@@ -46,7 +46,7 @@ endif    "for windows only
 set nobackup
 "set noundofile
 if exists('+undofile')
-    set undofile
+	set undofile
 endif
 set laststatus=2
 set history=500
@@ -56,7 +56,7 @@ set showcmd
 set listchars=tab:>-,trail:-
 "set list
 if has("mouse")
-    set mouse=a
+	set mouse=a
 endif
 
 " Fast saving
@@ -96,8 +96,8 @@ set hlsearch
 "--------------------------------------------- 
 " Text formatting/layout
 "--------------------------------------------- 
-set ai                  " autoindent
-set si                  " smartindent
+set autoindent
+set smartindent
 "set cindent             " do C-style indenting
 set fo=tcrqn            " see help (complex)
 set tabstop=4           " tab spacing (settings below are just to unify it)
@@ -131,19 +131,19 @@ set foldopen -=undo     " don't open folds when you undo stuff
 "--------------------------------------------
 set wrap
 if has("gui")
-  colo evening
-  "colo molokai
-  set lines=25 columns=80
-  set guioptions=
-  set guioptions+=m
-  "set guioptions -=T
-  "set guioptions -=r
-  "set guioptions +=b
-  "set guifont=courier_new:h10
-  "set guifont=Monaco:h10
+	colo evening
+	"colo molokai
+	set lines=25 columns=80
+	set guioptions=
+	set guioptions+=m
+	"set guioptions -=T
+	"set guioptions -=r
+	"set guioptions +=b
+	"set guifont=courier_new:h10
+	set guifont=Monaco:h12
 else
-  "colo blue
-  colo default
+	"colo blue
+	colo default
 endif
 "-----------------------------------------------------------
 set browsedir=buffer   " use directory of the related buffer for file browser
@@ -163,41 +163,41 @@ map Q gq
 " Encoding settings
 "------------------------------------------------------------
 if has("multi_byte")
-  " Set fileencoding priority
-  "set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
-  if getfsize(expand("%")) > 0
-    set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
-  else
-    set fileencodings=utf-8,cp936,big5,euc-jp,euc-kr,latin1
-  endif
-  "" CJK environment detection and corresponding setting
-  if v:lang =~ "^zh_CN"
-    "" Use cp936 to support GBK, euc-cn == gb2312
-    set encoding=cp936
-    set termencoding=cp936
-    set fileencoding=cp936
-  elseif v:lang =~ "^zh_TW"
-    "" cp950, big5 or euc-tw
-    set encoding=big5
-    set termencoding=big5
-    set fileencoding=big5
-  elseif v:lang =~ "^ko"
-    set encoding=euc-kr
-    set termencoding=euc-kr
-    set fileencoding=euc-kr
-  elseif v:lang =~ "^ja_JP"
-    set encoding=euc-jp
-    set termencoding=euc-jp
-    set fileencoding=euc-jp
-  endif
-  "" Detect UTF-8 locale, and replace CJK setting if needed
-  if v:lang =~ "utf8$" || v:lang =~ "UTF-8$"
-    set encoding=utf-8
-    set termencoding=utf-8
-    set fileencoding=utf-8
-  endif
+	" Set fileencoding priority
+	"set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
+	if getfsize(expand("%")) > 0
+		set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
+	else
+		set fileencodings=utf-8,cp936,big5,euc-jp,euc-kr,latin1
+	endif
+	"" CJK environment detection and corresponding setting
+	if v:lang =~ "^zh_CN"
+		"" Use cp936 to support GBK, euc-cn == gb2312
+		set encoding=cp936
+		set termencoding=cp936
+		set fileencoding=cp936
+	elseif v:lang =~ "^zh_TW"
+		"" cp950, big5 or euc-tw
+		set encoding=big5
+		set termencoding=big5
+		set fileencoding=big5
+	elseif v:lang =~ "^ko"
+		set encoding=euc-kr
+		set termencoding=euc-kr
+		set fileencoding=euc-kr
+	elseif v:lang =~ "^ja_JP"
+		set encoding=euc-jp
+		set termencoding=euc-jp
+		set fileencoding=euc-jp
+	endif
+	"" Detect UTF-8 locale, and replace CJK setting if needed
+	if v:lang =~ "utf8$" || v:lang =~ "UTF-8$"
+		set encoding=utf-8
+		set termencoding=utf-8
+		set fileencoding=utf-8
+	endif
 else
-  echoerr "Sorry, this version of Vim was not compiled with multi_byte"
+	echoerr "Sorry, this version of Vim was not compiled with multi_byte"
 endif
 
 "进行Tlist的设置--taglist
@@ -221,8 +221,6 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
 " original repos on github
-"Plugin 'sukima/xmledit'
-"Plugin 'sjl/gundo.vim'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'klen/python-mode'
 Plugin 'hdima/python-syntax'
@@ -256,21 +254,11 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'vimchina/vimcdoc'
 Plugin 'vimchina/vim-fencview'
 "html & css & javascript
-"Plugin 'maksimr/vim-jsbeautify'
-"Plugin 'einars/js-beautify'
-"Plugin 'wookiehangover/jshint.vim'
-"Plugin 'joestelmach/lint.vim'
+Plugin 'wookiehangover/jshint.vim'
+Plugin 'joestelmach/lint.vim'
 
 " vim-scripts repos
-"https://github.com/vim-scripts/xx.git
-"Plugin 'YankRing.vim'
-"Plugin 'vcscommand.vim'
-"Plugin 'SudoEdit.vim'
-"Plugin 'EasyGrep'
-"Plugin 'VOoM'
-"Plugin 'VimIM'
 Plugin 'taglist.vim'
-
 Plugin 'a.vim'
 Plugin 'molokai'
 
@@ -301,14 +289,14 @@ let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 
 " Define dictionary.
 let g:neocomplete#sources#dictionary#dictionaries = {
-      \ 'default' : '',
-      \ 'vimshell' : $HOME.'/.vimshell_hist',
-      \ 'scheme' : $HOME.'/.gosh_completions'
-      \ }
+			\ 'default' : '',
+			\ 'vimshell' : $HOME.'/.vimshell_hist',
+			\ 'scheme' : $HOME.'/.gosh_completions'
+			\ }
 
 " Define keyword.
 if !exists('g:neocomplete#keyword_patterns')
-  let g:neocomplete#keyword_patterns = {}
+	let g:neocomplete#keyword_patterns = {}
 endif
 let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 
@@ -320,10 +308,10 @@ inoremap <expr><C-l>     neocomplete#complete_common_string()
 " <CR>: close popup and save indent.
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 function! s:my_cr_function()
-  return neocomplete#close_popup() . "\<CR>"
-  "return neocomplete#smart_close_popup() . "\<CR>"
-  " For no inserting <CR> key.
-  "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+	return neocomplete#close_popup() . "\<CR>"
+	"return neocomplete#smart_close_popup() . "\<CR>"
+	" For no inserting <CR> key.
+	"return pumvisible() ? neocomplete#close_popup() : "\<CR>"
 endfunction
 " <TAB>: completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
@@ -363,7 +351,7 @@ autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 " Enable heavy omni completion.
 if !exists('g:neocomplete#sources#omni#input_patterns')
-  let g:neocomplete#sources#omni#input_patterns = {}
+	let g:neocomplete#sources#omni#input_patterns = {}
 endif
 let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
@@ -402,14 +390,3 @@ autocmd FileType html,css EmmetInstall
 "JSHint
 "let JSHintUpdateWriteOnly=1
 
-" jsbeautify
-map <leader>ff :call JsBeautify()<cr>
-" or
-"autocmd FileType javascript noremap <buffer>  <c-f> :call JsBeautify()<cr>
-" for html
-"autocmd FileType html noremap <buffer> <c-f> :call HtmlBeautify()<cr>
-" for css or scss
-"autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
-autocmd FileType javascript vnoremap <buffer>  <c-f> :call RangeJsBeautify()<cr>
-autocmd FileType html vnoremap <buffer> <c-f> :call RangeHtmlBeautify()<cr>
-autocmd FileType css vnoremap <buffer> <c-f> :call RangeCSSBeautify()<cr>
