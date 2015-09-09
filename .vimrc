@@ -254,8 +254,8 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'vimchina/vimcdoc'
 Plugin 'vimchina/vim-fencview'
 "html & css & javascript
-Plugin 'wookiehangover/jshint.vim'
-Plugin 'joestelmach/lint.vim'
+"Plugin 'wookiehangover/jshint.vim'
+"Plugin 'joestelmach/lint.vim'
 
 " vim-scripts repos
 Plugin 'taglist.vim'
