@@ -49,14 +49,14 @@ if exists('+undofile')
 	set undofile
 endif
 set laststatus=2
-set history=500
+set history=1000
 set ruler
 set showmatch
 set showcmd
 set listchars=tab:>-,trail:-
 "set list
 if has("mouse")
-	set mouse=a
+	set mouse=nvi
 endif
 
 " Fast saving
@@ -110,7 +110,7 @@ set formatoptions+=mM   " so that vim can reformat multibyte text (e.g. Chinese)
 if exists('+macmeta')
 	set macmeta
 endif
-set pastetoggle=<F2>
+"set pastetoggle=<F2>
 
 syntax on
 filetype on             " enable file type detection
@@ -240,6 +240,7 @@ Plugin 'kana/vim-textobj-function'
 Plugin 'nelstrom/vim-qargs'
 Plugin 'mileszs/ack.vim'
 Plugin 'Lokaltog/vim-powerline'
+"Plugin 'bling/vim-airline'
 Plugin 't9md/vim-quickhl'
 Plugin 'scrooloose/syntastic'
 Plugin 'scrooloose/nerdcommenter'
@@ -254,8 +255,8 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'vimchina/vimcdoc'
 Plugin 'vimchina/vim-fencview'
 "html & css & javascript
-Plugin 'wookiehangover/jshint.vim'
-Plugin 'joestelmach/lint.vim'
+"Plugin 'wookiehangover/jshint.vim'
+"Plugin 'joestelmach/lint.vim'
 
 " vim-scripts repos
 Plugin 'taglist.vim'
