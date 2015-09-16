@@ -58,7 +58,7 @@
    ;; are declared in a layer which is not a member of
    ;; the list `dotspacemacs-configuration-layers'
    ;; dotspacemacs-delete-orphan-packages t))
-   dotspacemacs-delete-orphan-packages t))
+   dotspacemacs-delete-orphan-packages nil))
 
 (defun dotspacemacs/init ()
   "Initialization function.
@@ -67,10 +67,8 @@ before layers configuration."
   ;; This setq-default sexp is an exhaustive list of all the supported
   ;; spacemacs settings.
   (setq-default
-   ;; One of `vim', `emacs' or `hybrid'. Evil is always enabled but if the
-   ;; variable is `emacs' then the `holy-mode' is enabled at startup. `hybrid'
-   ;; uses emacs key bindings for vim's insert mode, but otherwise leaves evil
-   ;; unchanged.
+   ;; Either `vim' or `emacs'. Evil is always enabled but if the variable
+   ;; is `emacs' then the `holy-mode' is enabled at startup.
    dotspacemacs-editing-style 'vim
    ;; If non nil output loading progress in `*Messages*' buffer.
    dotspacemacs-verbose-loading nil
@@ -87,8 +85,7 @@ before layers configuration."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(spacemacs-dark
-                         solarized-light
+   dotspacemacs-themes '(solarized-light
                          solarized-dark
                          spacemacs-light
                          spacemacs-dark
@@ -125,8 +122,7 @@ before layers configuration."
    ;; Default value is `cache'.
    dotspacemacs-auto-save-file-location 'cache
    ;; If non nil then `ido' replaces `helm' for some commands. For now only
-   ;; `find-files' (SPC f f), `find-spacemacs-file' (SPC f e s), and
-   ;; `find-contrib-file' (SPC f e c) are replaced.
+   ;; `find-files' (SPC f f) is replaced.
    dotspacemacs-use-ido nil
    ;; If non nil the paste micro-state is enabled. When enabled pressing `p`
    ;; several times cycle between the kill ring content.
@@ -183,16 +179,23 @@ before layers configuration."
 (setq org-todo-keywords
       '((sequence "TODO(t)" "ONGOING(o!)" "HANGUP(h!)" "|" "DONE(d!)" "CANCEL(c!)")))
 
-;; (setq-default c-basic-offset 4
-;;               tab-width 4
-;;               indent-tabs-mode t)
-
 (defun dotspacemacs/config ()
   "Configuration function.
  This function is called at the very end of Spacemacs initialization after
 layers configuration."
- (menu-bar-mode t)
+  (custom-set-variables
+   '(frame-title-format "emacs@%b" t)
+   '(visible-bell nil)
+   '(x-select-enable-clipboard t)
+   '(menu-bar-mode t))
+ ;; (menu-bar-mode t)
  ;; (tool-bar-mode t)
+
+ ;; Install tern by npm install -g tern, and get tern-auto-complete.el from github/marijnh/tern
+ (eval-after-load 'tern
+   '(progn
+      (require 'tern-auto-complete)
+      (tern-ac-setup)))
 )
 
 ;; Do not write anything past this comment. This is where Emacs will

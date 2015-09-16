@@ -44,10 +44,10 @@ endif    "for windows only
 " General setting
 "--------------------------------------------
 set nobackup
-"set noundofile
-if exists('+undofile')
-	set undofile
-endif
+set noundofile
+"if exists('+undofile')
+	"set undofile
+"endif
 set laststatus=2
 set history=1000
 set ruler
@@ -232,7 +232,7 @@ Plugin 'tpope/vim-abolish'
 Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-sensible'
 Plugin 'vim-ruby/vim-ruby'
-Plugin 'mattn/emmet-vim'
+"Plugin 'mattn/emmet-vim'
 Plugin 'kana/vim-textobj-user'
 Plugin 'kana/vim-textobj-lastpat'
 Plugin 'kana/vim-textobj-line'
@@ -322,7 +322,7 @@ inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><C-y>  neocomplete#close_popup()
 inoremap <expr><C-e>  neocomplete#cancel_popup()
 " Close popup by <Space>.
-"inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
+inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
 
 " For cursor moving in insert mode(Not recommended)
 "inoremap <expr><Left>  neocomplete#close_popup() . "\<Left>"
@@ -368,7 +368,7 @@ set laststatus=2
 "let g:Powerline_symbols='fancy'
 "let g:Powerline_symbols='unicode'
 
-let g:fencview_autodetect=1
+let g:fencview_autodetect=0
 let g:fencview_auto_patterns='*.txt,*.md,*.htm{l\=},*.c,*.cpp,*.py,*.php'
 let g:vim_markdown_folding_disabled=1
 
@@ -385,8 +385,8 @@ if has("autocmd")
 endif
 
 " enable emmet just for html/css
-let g:user_emmet_install_global=0
-autocmd FileType html,css EmmetInstall
+"let g:user_emmet_install_global=0
+"autocmd FileType html,css EmmetInstall
 
 "JSHint
 "let JSHintUpdateWriteOnly=1
