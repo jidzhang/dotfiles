@@ -3,6 +3,8 @@
 	email = YourName@email.com
 [push]
 	default = simple
+[color]
+	ui = true
 [alias]
 	st = status
 	co = checkout
