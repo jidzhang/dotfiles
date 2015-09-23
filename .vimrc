@@ -51,7 +51,7 @@ set noundofile
 set laststatus=2
 set history=1000
 set ruler
-set showmatch
+set noshowmatch
 set showcmd
 set listchars=tab:>-,trail:-
 "set list
@@ -232,7 +232,7 @@ Plugin 'tpope/vim-abolish'
 Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-sensible'
 Plugin 'vim-ruby/vim-ruby'
-"Plugin 'mattn/emmet-vim'
+Plugin 'mattn/emmet-vim'
 Plugin 'kana/vim-textobj-user'
 Plugin 'kana/vim-textobj-lastpat'
 Plugin 'kana/vim-textobj-line'
@@ -257,6 +257,7 @@ Plugin 'vimchina/vim-fencview'
 "html & css & javascript
 "Plugin 'wookiehangover/jshint.vim'
 "Plugin 'joestelmach/lint.vim'
+Plugin 'nono/jquery.vim'
 
 " vim-scripts repos
 Plugin 'taglist.vim'
@@ -322,7 +323,7 @@ inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><C-y>  neocomplete#close_popup()
 inoremap <expr><C-e>  neocomplete#cancel_popup()
 " Close popup by <Space>.
-inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
+"inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
 
 " For cursor moving in insert mode(Not recommended)
 "inoremap <expr><Left>  neocomplete#close_popup() . "\<Left>"
@@ -382,9 +383,12 @@ if has("autocmd")
 	autocmd FileType lisp setlocal ts=2 sts=2 sw=2 et
 	autocmd FileType python setlocal ts=4 sts=4 sw=4 et
 	autocmd FileType javascript setlocal ts=4 sts=4 sw=4 noet
+	autocmd FileType css setlocal iskeyword+=-
+	"syntax for jquery
+	autocmd BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
 endif
 
-" enable emmet just for html/css
+"Enable emmet just for html/css
 "let g:user_emmet_install_global=0
 "autocmd FileType html,css EmmetInstall
 
