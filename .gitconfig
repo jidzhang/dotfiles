@@ -5,6 +5,8 @@
 	default = simple
 [color]
 	ui = true
+	preloadindex = true
+	fscache = true
 [alias]
 	st = status
 	co = checkout
@@ -13,3 +15,5 @@
 	unstage = reset HEAD
 	last = log -1
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+[gc]
+	auto = 256
