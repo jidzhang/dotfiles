@@ -401,11 +401,12 @@ endif
 "JSHint
 "let JSHintUpdateWriteOnly=1
 
-let g:UltSnipsExpandTrigger='<c-cr>'
-let g:UltSnipsJumpForwardTrigge='<c-b>'
-let g:UltSnipsJumpBackwardTrigger='<c-z>'
+"let g:UltSnipsExpandTrigger='<c-cr>'
+"let g:UltSnipsJumpForwardTrigge='<c-b>'
+"let g:UltSnipsJumpBackwardTrigger='<c-z>'
 "let g:UltSnipsEditSplit='vertical'
 
+" setting from YCM
 let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 "let g:ycm_key_list_select_completion=[]
 "let g:ycm_key_list_previous_completion=[]
