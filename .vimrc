@@ -55,9 +55,9 @@ set noshowmatch
 set showcmd
 set listchars=tab:>-,trail:-
 "set list
-if has("mouse")
-	set mouse=nvi
-endif
+"if has("mouse")
+	"set mouse=nvi
+"endif
 set mouse=a
 
 " Fast saving
@@ -86,7 +86,7 @@ nmap <Space>bn :bn<CR>
 nmap <Space>fs :w<CR>
 
 "a shortcut for inserting datetime
-iabbrev dts <C-R>=strftime("%H:%M %m/%d/%Y")<CR>
+"iabbrev dts <C-R>=strftime("%H:%M %m/%d/%Y")<CR>
 
 "---------------------------------------------
 " Search setting
@@ -224,8 +224,8 @@ Plugin 'VundleVim/Vundle.vim'
 
 " original repos on github
 Plugin 'jiangmiao/auto-pairs'
-Plugin 'klen/python-mode'
-Plugin 'hdima/python-syntax'
+"Plugin 'klen/python-mode'
+"Plugin 'hdima/python-syntax'
 "Plugin 'Valloric/ListToggle'
 Plugin 'Valloric/YouCompleteMe'
 "Plugin 'SirVer/ultisnips'
@@ -263,7 +263,6 @@ Plugin 'vimchina/vim-fencview'
 "html & css & javascript
 "Plugin 'wookiehangover/jshint.vim'
 "Plugin 'joestelmach/lint.vim'
-Plugin 'nono/jquery.vim'
 
 " vim-scripts repos
 Plugin 'taglist.vim'
@@ -381,6 +380,7 @@ let g:vim_markdown_folding_disabled=1
 
 "colo evening
 "colo default
+colo molokai
 
 " filetype indentation
 if has("autocmd")
@@ -390,8 +390,6 @@ if has("autocmd")
 	autocmd FileType python setlocal ts=4 sts=4 sw=4 et
 	autocmd FileType javascript setlocal ts=4 sts=4 sw=4 noet
 	autocmd FileType css setlocal iskeyword+=-
-	"syntax for jquery
-	autocmd BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
 endif
 
 "Enable emmet just for html/css
