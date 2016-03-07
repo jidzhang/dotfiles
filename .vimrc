@@ -55,9 +55,9 @@ set noshowmatch
 set showcmd
 set listchars=tab:>-,trail:-
 "set list
-"if has("mouse")
-	"set mouse=nvi
-"endif
+if has("mouse")
+	set mouse=nvi
+endif
 set mouse=a
 
 " Fast saving
