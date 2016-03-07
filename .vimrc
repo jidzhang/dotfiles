@@ -55,9 +55,9 @@ set noshowmatch
 set showcmd
 set listchars=tab:>-,trail:-
 "set list
-if has("mouse")
-	set mouse=nvi
-endif
+"if has("mouse")
+	"set mouse=nvi
+"endif
 set mouse=a
 
 " Fast saving
@@ -86,7 +86,7 @@ nmap <Space>bn :bn<CR>
 nmap <Space>fs :w<CR>
 
 "a shortcut for inserting datetime
-iabbrev dts <C-R>=strftime("%H:%M %m/%d/%Y")<CR>
+"iabbrev dts <C-R>=strftime("%H:%M %m/%d/%Y")<CR>
 
 "---------------------------------------------
 " Search setting
