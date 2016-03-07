@@ -224,10 +224,11 @@ Plugin 'VundleVim/Vundle.vim'
 
 " original repos on github
 Plugin 'jiangmiao/auto-pairs'
-Plugin 'klen/python-mode'
-Plugin 'hdima/python-syntax'
+"Plugin 'klen/python-mode'
+"Plugin 'hdima/python-syntax'
 "Plugin 'Valloric/ListToggle'
 Plugin 'Valloric/YouCompleteMe'
+"Plugin 'ternjs/tern_for_vim'
 "Plugin 'SirVer/ultisnips'
 "Plugin 'honza/vim-snippets'
 Plugin 'tpope/vim-fugitive'
@@ -246,32 +247,31 @@ Plugin 'nelstrom/vim-qargs'
 Plugin 'mileszs/ack.vim'
 Plugin 'Lokaltog/vim-powerline'
 "Plugin 'bling/vim-airline'
-Plugin 't9md/vim-quickhl'
+"Plugin 't9md/vim-quickhl'
 Plugin 'scrooloose/syntastic'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
 " Plugin 'Shougo/neocomplete.vim'
 " Plugin 'Shougo/neosnippet-snippets'
 " Plugin 'Shougo/vimshell.vim'
-Plugin 'c9s/perlomni.vim'
+"Plugin 'c9s/perlomni.vim'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'terryma/vim-multiple-cursors'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'chrisbra/vim_faq'
+"Plugin 'altercation/vim-colors-solarized'
+"Plugin 'chrisbra/vim_faq'
 Plugin 'vimchina/vimcdoc'
-Plugin 'vimchina/vim-fencview'
+"Plugin 'vimchina/vim-fencview'
 "html & css & javascript
 "Plugin 'wookiehangover/jshint.vim'
 "Plugin 'joestelmach/lint.vim'
-Plugin 'nono/jquery.vim'
 
 " vim-scripts repos
 Plugin 'taglist.vim'
 Plugin 'a.vim'
 Plugin 'molokai'
 
-Plugin 'L9'
-Plugin 'FuzzyFinder'
+"Plugin 'L9'
+"Plugin 'FuzzyFinder'
 "Plugin 'AutoComplPop'
 
 " non github repos
@@ -381,6 +381,7 @@ let g:vim_markdown_folding_disabled=1
 
 "colo evening
 "colo default
+colo molokai
 
 " filetype indentation
 if has("autocmd")
@@ -390,8 +391,6 @@ if has("autocmd")
 	autocmd FileType python setlocal ts=4 sts=4 sw=4 et
 	autocmd FileType javascript setlocal ts=4 sts=4 sw=4 noet
 	autocmd FileType css setlocal iskeyword+=-
-	"syntax for jquery
-	autocmd BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
 endif
 
 "Enable emmet just for html/css
@@ -404,9 +403,8 @@ endif
 "let g:UltSnipsExpandTrigger='<c-cr>'
 "let g:UltSnipsJumpForwardTrigge='<c-b>'
 "let g:UltSnipsJumpBackwardTrigger='<c-z>'
-"let g:UltSnipsEditSplit='vertical'
+""let g:UltSnipsEditSplit='vertical'
 
-" setting from YCM
 let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 "let g:ycm_key_list_select_completion=[]
 "let g:ycm_key_list_previous_completion=[]
