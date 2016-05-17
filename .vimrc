@@ -3,42 +3,42 @@ source $VIMRUNTIME/vimrc_example.vim
 source $VIMRUNTIME/macros/matchit.vim
 
 if(has("win32") || has("win95") || has("win64") || has("win16"))
-	let g:vimrc_iswindows=1
+    let g:vimrc_iswindows=1
 else
-	let g:vimrc_iswindows=0
+    let g:vimrc_iswindows=0
 endif
 if (g:vimrc_iswindows)
-	source $VIMRUNTIME/mswin.vim
-	behave mswin
-	set diffexpr=MyDiff()
-	function MyDiff()
-		let opt = '-a --binary '
-		if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
-		if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
-		let arg1 = v:fname_in
-		if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
-		let arg2 = v:fname_new
-		if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
-		let arg3 = v:fname_out
-		if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
-		if $VIMRUNTIME =~ ' '
-			if &sh =~ '\<cmd'
-				if empty(&shellxquote)
-					let l:shxq_sav = ''
-					set shellxquote&
-				endif
-				let cmd = '"' . $VIMRUNTIME . '\diff"'
-			else
-				let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
-			endif
-		else
-			let cmd = $VIMRUNTIME . '\diff'
-		endif
-		silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3
-		if exists('l:shxq_sav')
-			let &shellxquote=l:shxq_sav
-		endif
-	endfunction
+    source $VIMRUNTIME/mswin.vim
+    behave mswin
+    set diffexpr=MyDiff()
+    function MyDiff()
+        let opt = '-a --binary '
+        if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
+        if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
+        let arg1 = v:fname_in
+        if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
+        let arg2 = v:fname_new
+        if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
+        let arg3 = v:fname_out
+        if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
+        if $VIMRUNTIME =~ ' '
+            if &sh =~ '\<cmd'
+                if empty(&shellxquote)
+                    let l:shxq_sav = ''
+                    set shellxquote&
+                endif
+                let cmd = '"' . $VIMRUNTIME . '\diff"'
+            else
+                let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
+            endif
+        else
+            let cmd = $VIMRUNTIME . '\diff'
+        endif
+        silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3
+        if exists('l:shxq_sav')
+            let &shellxquote=l:shxq_sav
+        endif
+    endfunction
 endif    "for windows only
 "--------------------------------------------
 " General setting
@@ -46,7 +46,7 @@ endif    "for windows only
 set nobackup
 set noundofile
 "if exists('+undofile')
-	"set undofile
+"set undofile
 "endif
 set laststatus=2
 set history=1000
@@ -56,7 +56,7 @@ set showcmd
 set listchars=tab:>-,trail:-
 "set list
 if has("mouse")
-	set mouse=nvi
+    set mouse=nvi
 endif
 set mouse=a
 
@@ -73,10 +73,10 @@ map <C-h>  <leader>c<space>
 "imap <C-CR> <C-o>O
 
 " setting for quickhl
-nmap <Space>m <Plug>(quickhl-manual-this)
-xmap <Space>m <Plug>(quickhl-manual-this)
-nmap <Space>M <Plug>(quickhl-manual-reset)
-xmap <Space>M <Plug>(quickhl-manual-reset)
+"nmap <Space>m <Plug>(quickhl-manual-this)
+"xmap <Space>m <Plug>(quickhl-manual-this)
+"nmap <Space>M <Plug>(quickhl-manual-reset)
+"xmap <Space>M <Plug>(quickhl-manual-reset)
 
 " setting for nerdtree
 nmap <Space>ft :NERDTreeToggle<CR>
@@ -96,9 +96,9 @@ nmap <Space>fed :e $MYVIMRC<CR>
 set ignorecase
 set incsearch
 set hlsearch
-"--------------------------------------------- 
+"---------------------------------------------
 " Text formatting/layout
-"--------------------------------------------- 
+"---------------------------------------------
 set autoindent
 set smartindent
 "set cindent             " do C-style indenting
@@ -111,7 +111,7 @@ set smarttab            " use tabs at the start of a line, spaces elsewhere
 set formatoptions+=mM   " so that vim can reformat multibyte text (e.g. Chinese)
 
 if exists('+macmeta')
-	set macmeta
+    set macmeta
 endif
 "set pastetoggle=<F2>
 
@@ -120,9 +120,9 @@ filetype on             " enable file type detection
 filetype plugin on      " enable loading the plugin for appropriate file type
 filetype plugin indent on
 
-"--------------------------------------------- 
+"---------------------------------------------
 " Folding
-"--------------------------------------------- 
+"---------------------------------------------
 set foldenable          " turn on folding
 set foldmethod=indent   " make folding indent sensitive
 set foldlevel =100      " don't autofold anything (but can still fold manually)
@@ -134,20 +134,20 @@ set foldopen -=undo     " don't open folds when you undo stuff
 "--------------------------------------------
 set wrap
 if has("gui")
-	colo evening
-	"colo molokai
-	set lines=25 columns=80
-	set guioptions=
-	set guioptions+=m
-	"set guioptions -=T
-	"set guioptions -=r
-	"set guioptions +=b
-	"set guifont=courier_new:h10
-	set guifont=Monaco:h12
+    colo evening
+    "colo molokai
+    set lines=25 columns=80
+    set guioptions=
+    set guioptions+=m
+    "set guioptions -=T
+    "set guioptions -=r
+    "set guioptions +=b
+    "set guifont=courier_new:h10
+    set guifont=Monaco:h12
 else
-	"colo blue
-	"colo default
-	colo evening
+    "colo blue
+    "colo default
+    colo evening
 endif
 "-----------------------------------------------------------
 set browsedir=buffer   " use directory of the related buffer for file browser
@@ -167,41 +167,41 @@ map Q gq
 " Encoding settings
 "------------------------------------------------------------
 if has("multi_byte")
-	" Set fileencoding priority
-	"set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
-	if getfsize(expand("%")) > 0
-		set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
-	else
-		set fileencodings=utf-8,cp936,big5,euc-jp,euc-kr,latin1
-	endif
-	"" CJK environment detection and corresponding setting
-	if v:lang =~ "^zh_CN"
-		"" Use cp936 to support GBK, euc-cn == gb2312
-		set encoding=cp936
-		set termencoding=cp936
-		set fileencoding=cp936
-	elseif v:lang =~ "^zh_TW"
-		"" cp950, big5 or euc-tw
-		set encoding=big5
-		set termencoding=big5
-		set fileencoding=big5
-	elseif v:lang =~ "^ko"
-		set encoding=euc-kr
-		set termencoding=euc-kr
-		set fileencoding=euc-kr
-	elseif v:lang =~ "^ja_JP"
-		set encoding=euc-jp
-		set termencoding=euc-jp
-		set fileencoding=euc-jp
-	endif
-	"" Detect UTF-8 locale, and replace CJK setting if needed
-	if v:lang =~ "utf8$" || v:lang =~ "UTF-8$"
-		set encoding=utf-8
-		set termencoding=utf-8
-		set fileencoding=utf-8
-	endif
+    " Set fileencoding priority
+    "set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
+    if getfsize(expand("%")) > 0
+        set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
+    else
+        set fileencodings=utf-8,cp936,big5,euc-jp,euc-kr,latin1
+    endif
+    "" CJK environment detection and corresponding setting
+    if v:lang =~ "^zh_CN"
+        "" Use cp936 to support GBK, euc-cn == gb2312
+        set encoding=cp936
+        set termencoding=cp936
+        set fileencoding=cp936
+    elseif v:lang =~ "^zh_TW"
+        "" cp950, big5 or euc-tw
+        set encoding=big5
+        set termencoding=big5
+        set fileencoding=big5
+    elseif v:lang =~ "^ko"
+        set encoding=euc-kr
+        set termencoding=euc-kr
+        set fileencoding=euc-kr
+    elseif v:lang =~ "^ja_JP"
+        set encoding=euc-jp
+        set termencoding=euc-jp
+        set fileencoding=euc-jp
+    endif
+    "" Detect UTF-8 locale, and replace CJK setting if needed
+    if v:lang =~ "utf8$" || v:lang =~ "UTF-8$"
+        set encoding=utf-8
+        set termencoding=utf-8
+        set fileencoding=utf-8
+    endif
 else
-	echoerr "Sorry, this version of Vim was not compiled with multi_byte"
+    echoerr "Sorry, this version of Vim was not compiled with multi_byte"
 endif
 
 "进行Tlist的设置--taglist
@@ -231,7 +231,10 @@ Plugin 'jiangmiao/auto-pairs'
 "Plugin 'hdima/python-syntax'
 "Plugin 'Valloric/ListToggle'
 "Plugin 'Valloric/YouCompleteMe'
-"Plugin 'ternjs/tern_for_vim'
+
+"Plugin 'Lokaltog/vim-powerline'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 
 "super power motion:
 Plugin 'easymotion/vim-easymotion'
@@ -254,17 +257,19 @@ Plugin 'kana/vim-textobj-lastpat'
 Plugin 'kana/vim-textobj-line'
 Plugin 'kana/vim-textobj-function'
 Plugin 'nelstrom/vim-qargs'
-Plugin 'mileszs/ack.vim'
-Plugin 'Lokaltog/vim-powerline'
-"Plugin 'bling/vim-airline'
+"Plugin 'mileszs/ack.vim'
 "Plugin 't9md/vim-quickhl'
 Plugin 'scrooloose/syntastic'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
- Plugin 'Shougo/neocomplete.vim'
- Plugin 'Shougo/neosnippet-snippets'
- Plugin 'Shougo/vimshell.vim'
+Plugin 'Shougo/neocomplete.vim'
+Plugin 'Shougo/neosnippet-snippets'
+Plugin 'Shougo/vimshell.vim'
+Plugin 'Shougo/unite.vim'
 "Plugin 'c9s/perlomni.vim'
+Plugin 'ternjs/tern_for_vim'
+
+Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'terryma/vim-multiple-cursors'
 "Plugin 'altercation/vim-colors-solarized'
@@ -307,14 +312,14 @@ let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 
 " Define dictionary.
 let g:neocomplete#sources#dictionary#dictionaries = {
-			\ 'default' : '',
-			\ 'vimshell' : $HOME.'/.vimshell_hist',
-			\ 'scheme' : $HOME.'/.gosh_completions'
-			\ }
+            \ 'default' : '',
+            \ 'vimshell' : $HOME.'/.vimshell_hist',
+            \ 'scheme' : $HOME.'/.gosh_completions'
+            \ }
 
 " Define keyword.
 if !exists('g:neocomplete#keyword_patterns')
-	let g:neocomplete#keyword_patterns = {}
+    let g:neocomplete#keyword_patterns = {}
 endif
 let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 
@@ -326,10 +331,10 @@ inoremap <expr><C-l>     neocomplete#complete_common_string()
 " <CR>: close popup and save indent.
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 function! s:my_cr_function()
-	return neocomplete#close_popup() . "\<CR>"
-	"return neocomplete#smart_close_popup() . "\<CR>"
-	" For no inserting <CR> key.
-	"return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+    return neocomplete#close_popup() . "\<CR>"
+    "return neocomplete#smart_close_popup() . "\<CR>"
+    " For no inserting <CR> key.
+    "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
 endfunction
 " <TAB>: completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
@@ -369,7 +374,7 @@ autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 " Enable heavy omni completion.
 if !exists('g:neocomplete#sources#omni#input_patterns')
-	let g:neocomplete#sources#omni#input_patterns = {}
+    let g:neocomplete#sources#omni#input_patterns = {}
 endif
 let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
@@ -395,12 +400,12 @@ colo molokai
 
 " filetype indentation
 if has("autocmd")
-	filetype on
-	autocmd FileType ruby setlocal ts=2 sts=2 sw=2 et
-	autocmd FileType lisp setlocal ts=2 sts=2 sw=2 et
-	autocmd FileType python setlocal ts=4 sts=4 sw=4 et
-	autocmd FileType javascript setlocal ts=4 sts=4 sw=4 noet
-	autocmd FileType css setlocal iskeyword+=-
+    filetype on
+    autocmd FileType ruby setlocal ts=2 sts=2 sw=2 et
+    autocmd FileType lisp setlocal ts=2 sts=2 sw=2 et
+    autocmd FileType python setlocal ts=4 sts=4 sw=4 et
+    autocmd FileType javascript setlocal ts=4 sts=4 sw=4 noet
+    autocmd FileType css setlocal iskeyword+=-
 endif
 
 "Enable emmet just for html/css
@@ -412,9 +417,13 @@ endif
 
 " Trigger configuration. Do not use <tab> if you use
 " https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<c-cr>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+"let g:UltiSnipsExpandTrigger="<tab>"
+"let g:UltiSnipsJumpForwardTrigger="<c-b>"
+"let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsListSnippets="<c-tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 "
 " " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
@@ -432,28 +441,28 @@ let g:UltiSnipsEditSplit="vertical"
 " You can use other keymappings like <C-l> instead of <CR> if you want to" use
 " these mappings as default search and somtimes want to move cursor with"
 " EasyMotion.
-function! s:incsearch_config(...) abort  
-		return incsearch#util#deepextend(deepcopy({  
-						\   'modules': [incsearch#config#easymotion#module({'overwin': 1})],  
-						\   'keymap': {
-						\ "\<CR>": '<Over>(easymotion)'  
-						\   },  
-						\   'is_expr': 0  
-						\  }), get(a:, 1, {}))
-	endfunction
-	noremap <silent><expr> / incsearch#go(<SID>incsearch_config())
-	noremap <silent><expr> ? incsearch#go(<SID>incsearch_config({'command': '?'}))
-	noremap <silent><expr> g/ incsearch#go(<SID>incsearch_config({'is_stay': 1}))
+function! s:incsearch_config(...) abort
+    return incsearch#util#deepextend(deepcopy({
+                \   'modules': [incsearch#config#easymotion#module({'overwin': 1})],
+                \   'keymap': {
+                \ "\<CR>": '<Over>(easymotion)'
+                \   },
+                \   'is_expr': 0
+                \  }), get(a:, 1, {}))
+endfunction
+noremap <silent><expr> / incsearch#go(<SID>incsearch_config())
+noremap <silent><expr> ? incsearch#go(<SID>incsearch_config({'command': '?'}))
+noremap <silent><expr> g/ incsearch#go(<SID>incsearch_config({'is_stay': 1}))
 
-
+" Setting for incsearch_fuzzy
 function! s:config_easyfuzzymotion(...) abort
-	return extend(copy({
-	  \   'converters': [incsearch#config#fuzzyword#converter()],
-	  \   'modules': [incsearch#config#easymotion#module({'overwin': 1})],
-	  \   'keymap': {"\<CR>": '<Over>(easymotion)'},
-	  \   'is_expr': 0,
-	  \   'is_stay': 1
-	  \ }), get(a:, 1, {}))
+    return extend(copy({
+                \   'converters': [incsearch#config#fuzzyword#converter()],
+                \   'modules': [incsearch#config#easymotion#module({'overwin': 1})],
+                \   'keymap': {"\<CR>": '<Over>(easymotion)'},
+                \   'is_expr': 0,
+                \   'is_stay': 1
+                \ }), get(a:, 1, {}))
 endfunction
 
 noremap <silent><expr> <Space>/ incsearch#go(<SID>config_easyfuzzymotion())
