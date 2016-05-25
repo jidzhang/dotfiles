@@ -67,7 +67,7 @@ nmap <leader>q  :q<cr>
 nmap <leader>d  :bd<cr>
 nmap <leader>n  :bn<cr>
 "支持单行和多行的选择，//格式
-map <C-h>  <leader>c<space>
+map <c-h>  <leader>c<space>
 "nmap <S-CR> i<CR><ESC>
 "imap <S-CR> <C-o>o
 "imap <C-CR> <C-o>O
@@ -79,13 +79,13 @@ map <C-h>  <leader>c<space>
 "xmap <Space>M <Plug>(quickhl-manual-reset)
 
 " setting for nerdtree
-nmap <Space>ft :NERDTreeToggle<CR>
+nmap <space>ft :NERDTreeToggle<cr>
 
-nmap <Space>bd :bd<CR>
-nmap <Space>bn :bn<CR>
-nmap <Space>fs :w<CR>
+nmap <space>bd :bd<cr>
+nmap <space>bn :bn<cr>
+nmap <space>fs :w<cr>
 
-nmap <Space>fed :e $MYVIMRC<CR>
+nmap <space>fed :e $MYVIMRC<cr>
 
 "a shortcut for inserting datetime
 "iabbrev dts <C-R>=strftime("%H:%M %m/%d/%Y")<CR>
@@ -101,7 +101,6 @@ set hlsearch
 "---------------------------------------------
 set autoindent
 set smartindent
-"set cindent             " do C-style indenting
 set fo=tcrqn            " see help (complex)
 set tabstop=4           " tab spacing (settings below are just to unify it)
 set softtabstop=4       " unify
@@ -242,8 +241,8 @@ Plugin 'haya14busa/incsearch.vim'
 Plugin 'haya14busa/incsearch-easymotion.vim'
 Plugin 'haya14busa/incsearch-fuzzy.vim'
 
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
+"Plugin 'SirVer/ultisnips'
+"Plugin 'honza/vim-snippets'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-abolish'
@@ -256,7 +255,7 @@ Plugin 'kana/vim-textobj-user'
 Plugin 'kana/vim-textobj-lastpat'
 Plugin 'kana/vim-textobj-line'
 Plugin 'kana/vim-textobj-function'
-Plugin 'nelstrom/vim-qargs'
+"Plugin 'nelstrom/vim-qargs'
 "Plugin 'mileszs/ack.vim'
 "Plugin 't9md/vim-quickhl'
 Plugin 'scrooloose/syntastic'
@@ -267,7 +266,7 @@ Plugin 'Shougo/neosnippet-snippets'
 Plugin 'Shougo/vimshell.vim'
 Plugin 'Shougo/unite.vim'
 "Plugin 'c9s/perlomni.vim'
-Plugin 'ternjs/tern_for_vim'
+"Plugin 'ternjs/tern_for_vim'
 
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
@@ -387,8 +386,6 @@ let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\
 "===========================
 set t_Co=256
 set laststatus=2
-"let g:Powerline_symbols='fancy'
-"let g:Powerline_symbols='unicode'
 
 let g:fencview_autodetect=0
 let g:fencview_auto_patterns='*.txt,*.md,*.htm{l\=},*.c,*.cpp,*.py,*.php'
@@ -408,13 +405,6 @@ if has("autocmd")
     autocmd FileType css setlocal iskeyword+=-
 endif
 
-"Enable emmet just for html/css
-"let g:user_emmet_install_global=0
-"autocmd FileType html,css EmmetInstall
-
-"JSHint
-"let JSHintUpdateWriteOnly=1
-
 " Trigger configuration. Do not use <tab> if you use
 " https://github.com/Valloric/YouCompleteMe.
 "let g:UltiSnipsExpandTrigger="<tab>"
@@ -424,19 +414,19 @@ let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsListSnippets="<c-tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-"
-" " If you want :UltiSnipsEdit to split your window.
+
+" If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
 
-" "let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
-" "let g:ycm_key_list_select_completion=[]
-" "let g:ycm_key_list_previous_completion=[]
-" let g:ycm_error_symbol = '>>'
-" let g:ycm_warning_symbol = '>*'
-" nnoremap <space>gl :YcmCompleter GoToDeclaration<CR>
-" nnoremap <space>gf :YcmCompleter GoToDefinition<CR>
-" nnoremap <space>gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
-" nmap <F4> :YcmDiags<CR>
+"let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
+""let g:ycm_key_list_select_completion=[]
+""let g:ycm_key_list_previous_completion=[]
+"let g:ycm_error_symbol = '>>'
+"let g:ycm_warning_symbol = '>*'
+"nnoremap <space>gl :YcmCompleter GoToDeclaration<CR>
+"nnoremap <space>gf :YcmCompleter GoToDefinition<CR>
+"nnoremap <space>gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+"nmap <F4> :YcmDiags<CR>
 
 " You can use other keymappings like <C-l> instead of <CR> if you want to" use
 " these mappings as default search and somtimes want to move cursor with"
