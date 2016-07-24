@@ -273,9 +273,9 @@ Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'altercation/vim-colors-solarized'
-"Plugin 'chrisbra/vim_faq'
 Plugin 'vimchina/vimcdoc'
 "Plugin 'vimchina/vim-fencview'
+"Plugin 'chrisbra/vim_faq'
 "html & css & javascript
 "Plugin 'wookiehangover/jshint.vim'
 "Plugin 'joestelmach/lint.vim'
@@ -384,6 +384,7 @@ let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\
 " https://github.com/c9s/perlomni.vim
 "let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 
+
 "===========================
 set t_Co=256
 set laststatus=2
@@ -392,8 +393,8 @@ set laststatus=2
 "let g:fencview_auto_patterns='*.txt,*.md,*.htm{l\=},*.c,*.cpp,*.py,*.php'
 "let g:vim_markdown_folding_disabled=1
 
-"colo evening
 "colo default
+"colo evening
 "colo molokai
 set background=light
 let g:solarized_italic=0
@@ -406,6 +407,7 @@ if has("autocmd")
     autocmd FileType lisp setlocal ts=2 sts=2 sw=2 et
     autocmd FileType python setlocal ts=4 sts=4 sw=4 et
     autocmd FileType javascript setlocal ts=4 sts=4 sw=4 noet
+    autocmd FileType html setlocal ts=4 sts=4 sw=4 et
     autocmd FileType css setlocal iskeyword+=-
 endif
 
