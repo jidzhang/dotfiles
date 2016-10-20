@@ -44,10 +44,9 @@ endif    "for windows only
 " General setting
 "--------------------------------------------
 set nobackup
-set noundofile
-"if exists('+undofile')
-"set undofile
-"endif
+if exists('+undofile')
+    set undofile
+endif
 set laststatus=2
 set history=1000
 set ruler
@@ -58,7 +57,7 @@ set listchars=tab:>-,trail:-
 if has("mouse")
     set mouse=nvi
 endif
-set mouse=a
+"set mouse=a
 
 " Fast saving
 nmap <leader>x  :x<cr>
@@ -68,9 +67,11 @@ nmap <leader>d  :bd<cr>
 nmap <leader>n  :bn<cr>
 "支持单行和多行的选择，//格式
 map <c-h>  <leader>c<space>
-"nmap <S-CR> i<CR><ESC>
-"imap <S-CR> <C-o>o
-"imap <C-CR> <C-o>O
+if (g:vimrc_iswindows)
+    nmap <S-CR> i<CR><ESC>
+    imap <S-CR> <C-o>o
+    imap <C-CR> <C-o>O
+endif
 
 " setting for quickhl
 "nmap <Space>m <Plug>(quickhl-manual-this)
@@ -128,26 +129,6 @@ set foldlevel =100      " don't autofold anything (but can still fold manually)
 set foldopen -=search   " don't open folds when you search into them
 set foldopen -=undo     " don't open folds when you undo stuff
 
-"---------------------------------------------
-" Gui-font
-"--------------------------------------------
-set wrap
-if has("gui")
-    colo evening
-    "colo molokai
-    set lines=25 columns=80
-    set guioptions=
-    set guioptions+=m
-    "set guioptions -=T
-    "set guioptions -=r
-    "set guioptions +=b
-    "set guifont=courier_new:h10
-    set guifont=Monaco:h12
-else
-    "colo blue
-    "colo default
-    colo evening
-endif
 "-----------------------------------------------------------
 set browsedir=buffer   " use directory of the related buffer for file browser
 set clipboard+=unnamed " use clipboard register '*' for all y, d, c, p ops
@@ -330,7 +311,8 @@ inoremap <expr><C-l>     neocomplete#complete_common_string()
 " <CR>: close popup and save indent.
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 function! s:my_cr_function()
-    return neocomplete#close_popup() . "\<CR>"
+    return (pumvisible() ? "\<C-y>" : "") . "\<CR>"
+    "return neocomplete#close_popup() . "\<CR>"
     "return neocomplete#smart_close_popup() . "\<CR>"
     " For no inserting <CR> key.
     "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
@@ -387,13 +369,34 @@ let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\
 set t_Co=256
 set laststatus=2
 
-let g:fencview_autodetect=0
-let g:fencview_auto_patterns='*.txt,*.md,*.htm{l\=},*.c,*.cpp,*.py,*.php'
-let g:vim_markdown_folding_disabled=1
+"let g:fencview_autodetect=0
+"let g:fencview_auto_patterns='*.txt,*.md,*.htm{l\=},*.c,*.cpp,*.py,*.php'
+"let g:vim_markdown_folding_disabled=1
 
-"colo evening
-"colo default
-colo molokai
+"---------------------------------------------
+" Gui-font
+"--------------------------------------------
+set wrap
+if has("gui")
+    colo evening
+    "colo molokai
+    set lines=25 columns=80
+    set guioptions=
+    set guioptions+=m
+    "set guioptions -=T
+    "set guioptions -=r
+    "set guioptions +=b
+    "set guifont=courier_new:h10
+    "set guifont=Monaco:h10
+	set background=light
+	let g:solarized_italic=0
+	"colo solarized
+else
+    "colo blue
+    "colo default
+    "colo evening
+	"colo molokai
+endif
 
 " filetype indentation
 if has("autocmd")
@@ -402,7 +405,8 @@ if has("autocmd")
     autocmd FileType lisp setlocal ts=2 sts=2 sw=2 et
     autocmd FileType python setlocal ts=4 sts=4 sw=4 et
     autocmd FileType javascript setlocal ts=4 sts=4 sw=4 noet
-    autocmd FileType css setlocal iskeyword+=-
+    autocmd FileType html	setlocal ts=4 sts=4 sw=4 et
+    autocmd FileType css	setlocal iskeyword+=-
 endif
 
 " Trigger configuration. Do not use <tab> if you use
@@ -410,13 +414,13 @@ endif
 "let g:UltiSnipsExpandTrigger="<tab>"
 "let g:UltiSnipsJumpForwardTrigger="<c-b>"
 "let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsListSnippets="<c-tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+"let g:UltiSnipsExpandTrigger="<tab>"
+"let g:UltiSnipsListSnippets="<c-tab>"
+"let g:UltiSnipsJumpForwardTrigger="<tab>"
+"let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 " If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
+"let g:UltiSnipsEditSplit="vertical"
 
 "let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 ""let g:ycm_key_list_select_completion=[]

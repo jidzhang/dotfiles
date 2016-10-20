@@ -53,7 +53,7 @@ set ruler
 set noshowmatch
 set showcmd
 set listchars=tab:>-,trail:-
-set list
+"set list
 if has("mouse")
     set mouse=nvi
 endif
@@ -129,26 +129,6 @@ set foldlevel =100      " don't autofold anything (but can still fold manually)
 set foldopen -=search   " don't open folds when you search into them
 set foldopen -=undo     " don't open folds when you undo stuff
 
-"---------------------------------------------
-" Gui-font
-"--------------------------------------------
-set wrap
-if has("gui")
-    colo evening
-    "colo molokai
-    set lines=25 columns=80
-    set guioptions=
-    set guioptions+=m
-    "set guioptions -=T
-    "set guioptions -=r
-    "set guioptions +=b
-    "set guifont=courier_new:h10
-    "set guifont=Monaco:h10
-else
-    "colo blue
-    "colo default
-    colo evening
-endif
 "-----------------------------------------------------------
 set browsedir=buffer   " use directory of the related buffer for file browser
 set clipboard+=unnamed " use clipboard register '*' for all y, d, c, p ops
@@ -232,18 +212,19 @@ Plugin 'jiangmiao/auto-pairs'
 "Plugin 'Valloric/ListToggle'
 "Plugin 'Valloric/YouCompleteMe'
 
-"Plugin 'Lokaltog/vim-powerline'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
+Plugin 'Lokaltog/vim-powerline'
+"Plugin 'vim-airline/vim-airline'
+"Plugin 'vim-airline/vim-airline-themes'
 
 "super power motion:
-Plugin 'easymotion/vim-easymotion'
-Plugin 'haya14busa/incsearch.vim'
-Plugin 'haya14busa/incsearch-easymotion.vim'
-Plugin 'haya14busa/incsearch-fuzzy.vim'
+"Plugin 'easymotion/vim-easymotion'
+"Plugin 'haya14busa/incsearch.vim'
+"Plugin 'haya14busa/incsearch-easymotion.vim'
+"Plugin 'haya14busa/incsearch-fuzzy.vim'
 
 "Plugin 'SirVer/ultisnips'
 "Plugin 'honza/vim-snippets'
+
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-abolish'
@@ -266,12 +247,12 @@ Plugin 'Shougo/neocomplete.vim'
 Plugin 'Shougo/neosnippet-snippets'
 Plugin 'Shougo/vimshell.vim'
 Plugin 'Shougo/unite.vim'
-"Plugin 'c9s/perlomni.vim'
-"Plugin 'ternjs/tern_for_vim'
+Plugin 'c9s/perlomni.vim'
+Plugin 'ternjs/tern_for_vim'
 
-Plugin 'godlygeek/tabular'
-Plugin 'plasticboy/vim-markdown'
-Plugin 'terryma/vim-multiple-cursors'
+"Plugin 'godlygeek/tabular'
+"Plugin 'plasticboy/vim-markdown'
+"Plugin 'terryma/vim-multiple-cursors'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'vimchina/vimcdoc'
 "Plugin 'vimchina/vim-fencview'
@@ -279,6 +260,8 @@ Plugin 'vimchina/vimcdoc'
 "html & css & javascript
 "Plugin 'wookiehangover/jshint.vim'
 "Plugin 'joestelmach/lint.vim'
+
+"Plugin 'jidzhang/vim-breeze-tpl'
 
 " vim-scripts repos
 Plugin 'taglist.vim'
@@ -331,7 +314,8 @@ inoremap <expr><C-l>     neocomplete#complete_common_string()
 " <CR>: close popup and save indent.
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 function! s:my_cr_function()
-    return neocomplete#close_popup() . "\<CR>"
+    return (pumvisible() ? "\<C-y>" : "") . "\<CR>"
+    "return neocomplete#close_popup() . "\<CR>"
     "return neocomplete#smart_close_popup() . "\<CR>"
     " For no inserting <CR> key.
     "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
@@ -393,22 +377,40 @@ set laststatus=2
 "let g:fencview_auto_patterns='*.txt,*.md,*.htm{l\=},*.c,*.cpp,*.py,*.php'
 "let g:vim_markdown_folding_disabled=1
 
-"colo default
-"colo evening
-"colo molokai
-set background=light
-let g:solarized_italic=0
-colo solarized
+"---------------------------------------------
+" Gui-font
+"--------------------------------------------
+set wrap
+if has("gui")
+    colo evening
+    "colo molokai
+    set lines=25 columns=80
+    set guioptions=
+    set guioptions+=m
+    "set guioptions -=T
+    "set guioptions -=r
+    "set guioptions +=b
+    "set guifont=courier_new:h10
+    "set guifont=Monaco:h10
+	set background=light
+	let g:solarized_italic=0
+	"colo solarized
+else
+    "colo blue
+    "colo default
+    "colo evening
+	"colo molokai
+endif
 
 " filetype indentation
 if has("autocmd")
     filetype on
-    autocmd FileType ruby setlocal ts=2 sts=2 sw=2 et
-    autocmd FileType lisp setlocal ts=2 sts=2 sw=2 et
+    autocmd FileType ruby	setlocal ts=2 sts=2 sw=2 et
+    autocmd FileType lisp	setlocal ts=2 sts=2 sw=2 et
     autocmd FileType python setlocal ts=4 sts=4 sw=4 et
     autocmd FileType javascript setlocal ts=4 sts=4 sw=4 noet
-    autocmd FileType html setlocal ts=4 sts=4 sw=4 et
-    autocmd FileType css setlocal iskeyword+=-
+    autocmd FileType html	setlocal ts=4 sts=4 sw=4 et
+    autocmd FileType css	setlocal iskeyword+=-
 endif
 
 " Trigger configuration. Do not use <tab> if you use
@@ -437,28 +439,30 @@ let g:UltiSnipsEditSplit="vertical"
 " You can use other keymappings like <C-l> instead of <CR> if you want to" use
 " these mappings as default search and somtimes want to move cursor with"
 " EasyMotion.
-function! s:incsearch_config(...) abort
-    return incsearch#util#deepextend(deepcopy({
-                \   'modules': [incsearch#config#easymotion#module({'overwin': 1})],
-                \   'keymap': {
-                \ "\<CR>": '<Over>(easymotion)'
-                \   },
-                \   'is_expr': 0
-                \  }), get(a:, 1, {}))
-endfunction
-noremap <silent><expr> / incsearch#go(<SID>incsearch_config())
-noremap <silent><expr> ? incsearch#go(<SID>incsearch_config({'command': '?'}))
-noremap <silent><expr> g/ incsearch#go(<SID>incsearch_config({'is_stay': 1}))
+"" function! s:incsearch_config(...) abort
+""     return incsearch#util#deepextend(deepcopy({
+""                 \   'modules': [incsearch#config#easymotion#module({'overwin': 1})],
+""                 \   'keymap': {
+""                 \ "\<CR>": '<Over>(easymotion)'
+""                 \   },
+""                 \   'is_expr': 0
+""                 \  }), get(a:, 1, {}))
+"" endfunction
+"" noremap <silent><expr> / incsearch#go(<SID>incsearch_config())
+"" noremap <silent><expr> ? incsearch#go(<SID>incsearch_config({'command': '?'}))
+"" noremap <silent><expr> g/ incsearch#go(<SID>incsearch_config({'is_stay': 1}))
+"" 
+"" " Setting for incsearch_fuzzy
+"" function! s:config_easyfuzzymotion(...) abort
+""     return extend(copy({
+""                 \   'converters': [incsearch#config#fuzzyword#converter()],
+""                 \   'modules': [incsearch#config#easymotion#module({'overwin': 1})],
+""                 \   'keymap': {"\<CR>": '<Over>(easymotion)'},
+""                 \   'is_expr': 0,
+""                 \   'is_stay': 1
+""                 \ }), get(a:, 1, {}))
+"" endfunction
+"" 
+"" noremap <silent><expr> <Space>/ incsearch#go(<SID>config_easyfuzzymotion())
 
-" Setting for incsearch_fuzzy
-function! s:config_easyfuzzymotion(...) abort
-    return extend(copy({
-                \   'converters': [incsearch#config#fuzzyword#converter()],
-                \   'modules': [incsearch#config#easymotion#module({'overwin': 1})],
-                \   'keymap': {"\<CR>": '<Over>(easymotion)'},
-                \   'is_expr': 0,
-                \   'is_stay': 1
-                \ }), get(a:, 1, {}))
-endfunction
 
-noremap <silent><expr> <Space>/ incsearch#go(<SID>config_easyfuzzymotion())
