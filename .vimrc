@@ -47,7 +47,7 @@ set nobackup
 if exists('+undofile')
     set undofile
 endif
-set laststatus=2
+"set laststatus=2
 set history=1000
 set ruler
 set noshowmatch
@@ -113,7 +113,7 @@ set formatoptions+=mM   " so that vim can reformat multibyte text (e.g. Chinese)
 if exists('+macmeta')
     set macmeta
 endif
-"set pastetoggle=<F2>
+set pastetoggle=<F2>
 
 syntax on
 filetype on             " enable file type detection
@@ -252,7 +252,7 @@ Plugin 'Shougo/unite.vim'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'terryma/vim-multiple-cursors'
-"Plugin 'altercation/vim-colors-solarized'
+Plugin 'altercation/vim-colors-solarized'
 "Plugin 'chrisbra/vim_faq'
 Plugin 'vimchina/vimcdoc'
 "Plugin 'vimchina/vim-fencview'
@@ -365,9 +365,7 @@ let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\
 " https://github.com/c9s/perlomni.vim
 "let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 
-"===========================
-set t_Co=256
-set laststatus=2
+"=====================================
 
 "let g:fencview_autodetect=0
 "let g:fencview_auto_patterns='*.txt,*.md,*.htm{l\=},*.c,*.cpp,*.py,*.php'
@@ -394,8 +392,8 @@ if has("gui")
 else
     "colo blue
     "colo default
-    "colo evening
 	"colo molokai
+	colo evening
 endif
 
 " filetype indentation
@@ -405,8 +403,8 @@ if has("autocmd")
     autocmd FileType lisp setlocal ts=2 sts=2 sw=2 et
     autocmd FileType python setlocal ts=4 sts=4 sw=4 et
     autocmd FileType javascript setlocal ts=4 sts=4 sw=4 noet
-    autocmd FileType html	setlocal ts=4 sts=4 sw=4 et
-    autocmd FileType css	setlocal iskeyword+=-
+    autocmd FileType html setlocal ts=4 sts=4 sw=4 et
+    autocmd FileType css setlocal iskeyword+=-
 endif
 
 " Trigger configuration. Do not use <tab> if you use
