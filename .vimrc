@@ -47,7 +47,7 @@ set nobackup
 if exists('+undofile')
     set undofile
 endif
-"set laststatus=2
+set laststatus=2
 set history=1000
 set ruler
 set noshowmatch
@@ -224,19 +224,19 @@ Plugin 'haya14busa/incsearch-fuzzy.vim'
 
 "Plugin 'SirVer/ultisnips'
 "Plugin 'honza/vim-snippets'
+Plugin 'vim-ruby/vim-ruby'
+Plugin 'mattn/emmet-vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-abolish'
 Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-sensible'
 Plugin 'tpope/vim-fireplace'
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'mattn/emmet-vim'
 Plugin 'kana/vim-textobj-user'
 Plugin 'kana/vim-textobj-lastpat'
 Plugin 'kana/vim-textobj-line'
 Plugin 'kana/vim-textobj-function'
-"Plugin 'nelstrom/vim-qargs'
+Plugin 'nelstrom/vim-qargs'
 "Plugin 'mileszs/ack.vim'
 "Plugin 't9md/vim-quickhl'
 Plugin 'scrooloose/syntastic'
@@ -246,8 +246,8 @@ Plugin 'Shougo/neocomplete.vim'
 Plugin 'Shougo/neosnippet-snippets'
 Plugin 'Shougo/vimshell.vim'
 Plugin 'Shougo/unite.vim'
-"Plugin 'c9s/perlomni.vim'
-"Plugin 'ternjs/tern_for_vim'
+Plugin 'c9s/perlomni.vim'
+Plugin 'ternjs/tern_for_vim'
 
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
@@ -279,7 +279,8 @@ filetype plugin indent on
 
 "=====================================
 " Setting for NeoComplete
-"Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
+
+"Note: This option must be set in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
 " Disable AutoComplPop.
 let g:acp_enableAtStartup = 0
 " Use neocomplete.
@@ -287,7 +288,7 @@ let g:neocomplete#enable_at_startup = 1
 " Use smartcase.
 let g:neocomplete#enable_smart_case = 1
 " Set minimum syntax keyword length.
-let g:neocomplete#sources#syntax#min_keyword_length = 3
+let g:neocomplete#sources#syntax#min_keyword_length = 2
 let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 
 " Define dictionary.
@@ -311,31 +312,17 @@ inoremap <expr><C-l>     neocomplete#complete_common_string()
 " <CR>: close popup and save indent.
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 function! s:my_cr_function()
-    return (pumvisible() ? "\<C-y>" : "") . "\<CR>"
-    "return neocomplete#close_popup() . "\<CR>"
-    "return neocomplete#smart_close_popup() . "\<CR>"
+    return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
     " For no inserting <CR> key.
-    "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+    "return pumvisible() ? "\<C-y>" : "\<CR>"
 endfunction
 " <TAB>: completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " <C-h>, <BS>: close popup and delete backword char.
 inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><C-y>  neocomplete#close_popup()
-inoremap <expr><C-e>  neocomplete#cancel_popup()
 " Close popup by <Space>.
-"inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
-
-" For cursor moving in insert mode(Not recommended)
-"inoremap <expr><Left>  neocomplete#close_popup() . "\<Left>"
-"inoremap <expr><Right> neocomplete#close_popup() . "\<Right>"
-"inoremap <expr><Up>    neocomplete#close_popup() . "\<Up>"
-"inoremap <expr><Down>  neocomplete#close_popup() . "\<Down>"
-" Or set this.
-"let g:neocomplete#enable_cursor_hold_i = 1
-" Or set this.
-"let g:neocomplete#enable_insert_char_pre = 1
+"inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
 
 " AutoComplPop like behavior.
 "let g:neocomplete#enable_auto_select = 1
@@ -357,15 +344,17 @@ autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 if !exists('g:neocomplete#sources#omni#input_patterns')
     let g:neocomplete#sources#omni#input_patterns = {}
 endif
-let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
 
 " For perlomni.vim setting.
 " https://github.com/c9s/perlomni.vim
-"let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 
-"=====================================
+"===========================
+set t_Co=256
+set laststatus=2
 
 "let g:fencview_autodetect=0
 "let g:fencview_auto_patterns='*.txt,*.md,*.htm{l\=},*.c,*.cpp,*.py,*.php'
@@ -376,8 +365,8 @@ let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\
 "--------------------------------------------
 set wrap
 if has("gui")
-    colo evening
     "colo molokai
+    "colo evening
     set lines=25 columns=80
     set guioptions=
     set guioptions+=m
@@ -386,14 +375,14 @@ if has("gui")
     "set guioptions +=b
     "set guifont=courier_new:h10
     "set guifont=Monaco:h10
-	set background=light
-	let g:solarized_italic=0
-	"colo solarized
+    set background=light
+    let g:solarized_italic=0
+    colo solarized
 else
-    "colo blue
     "colo default
-	"colo molokai
-	colo evening
+    "colo blue
+    "colo evening
+    colo molokai
 endif
 
 " filetype indentation
@@ -403,8 +392,8 @@ if has("autocmd")
     autocmd FileType lisp setlocal ts=2 sts=2 sw=2 et
     autocmd FileType python setlocal ts=4 sts=4 sw=4 et
     autocmd FileType javascript setlocal ts=4 sts=4 sw=4 noet
-    autocmd FileType html setlocal ts=4 sts=4 sw=4 et
-    autocmd FileType css setlocal iskeyword+=-
+    autocmd FileType html	setlocal ts=4 sts=4 sw=4 et
+    autocmd FileType css	setlocal iskeyword+=-
 endif
 
 " Trigger configuration. Do not use <tab> if you use
@@ -430,23 +419,37 @@ endif
 "nnoremap <space>gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 "nmap <F4> :YcmDiags<CR>
 
-" You can use other keymappings like <C-l> instead of <CR> if you want to" use
-" these mappings as default search and somtimes want to move cursor with"
+""================================
+" setting form easymotion
+" <Leader>f{char} to move to {char}
+map  <Leader>f <Plug>(easymotion-bd-f)
+nmap <Leader>f <Plug>(easymotion-overwin-f)
+" s{char}{char} to move to {char}{char}
+nmap s <Plug>(easymotion-overwin-f2)
+" Move to line
+map <Leader>l <Plug>(easymotion-bd-jk)
+nmap <Leader>l <Plug>(easymotion-overwin-line)
+" Move to word
+map  <Leader>w <Plug>(easymotion-bd-w)
+nmap <Leader>w <Plug>(easymotion-overwin-w)
+
+" You can use other keymappings like <C-l> instead of <CR> if you want to
+" use these mappings as default search and somtimes want to move cursor with
 " EasyMotion.
 function! s:incsearch_config(...) abort
     return incsearch#util#deepextend(deepcopy({
                 \   'modules': [incsearch#config#easymotion#module({'overwin': 1})],
                 \   'keymap': {
-                \ "\<CR>": '<Over>(easymotion)'
+                \     "\<CR>": '<Over>(easymotion)'
                 \   },
                 \   'is_expr': 0
-                \  }), get(a:, 1, {}))
+                \ }), get(a:, 1, {}))
 endfunction
-noremap <silent><expr> / incsearch#go(<SID>incsearch_config())
-noremap <silent><expr> ? incsearch#go(<SID>incsearch_config({'command': '?'}))
+
+noremap <silent><expr> /  incsearch#go(<SID>incsearch_config())
+noremap <silent><expr> ?  incsearch#go(<SID>incsearch_config({'command': '?'}))
 noremap <silent><expr> g/ incsearch#go(<SID>incsearch_config({'is_stay': 1}))
 
-" Setting for incsearch_fuzzy
 function! s:config_easyfuzzymotion(...) abort
     return extend(copy({
                 \   'converters': [incsearch#config#fuzzyword#converter()],
