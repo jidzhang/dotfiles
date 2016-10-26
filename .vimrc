@@ -81,15 +81,14 @@ endif
 
 " setting for nerdtree
 nmap <space>ft :NERDTreeToggle<cr>
-
 nmap <space>bd :bd<cr>
 nmap <space>bn :bn<cr>
 nmap <space>fs :w<cr>
-
 nmap <space>fed :e $MYVIMRC<cr>
 
 "a shortcut for inserting datetime
 "iabbrev dts <C-R>=strftime("%H:%M %m/%d/%Y")<CR>
+iabbrev dts <C-R>=strftime("%Y-%m-%d %H:%M")<CR>
 
 "---------------------------------------------
 " Search setting
@@ -422,16 +421,16 @@ endif
 ""================================
 " setting form easymotion
 " <Leader>f{char} to move to {char}
-map  <Leader>f <Plug>(easymotion-bd-f)
-nmap <Leader>f <Plug>(easymotion-overwin-f)
+map  <space>f <Plug>(easymotion-bd-f)
+nmap <space>f <Plug>(easymotion-overwin-f)
 " s{char}{char} to move to {char}{char}
 nmap s <Plug>(easymotion-overwin-f2)
 " Move to line
-map <Leader>l <Plug>(easymotion-bd-jk)
-nmap <Leader>l <Plug>(easymotion-overwin-line)
+map  <space>l <Plug>(easymotion-bd-jk)
+nmap <space>l <Plug>(easymotion-overwin-line)
 " Move to word
-map  <Leader>w <Plug>(easymotion-bd-w)
-nmap <Leader>w <Plug>(easymotion-overwin-w)
+map  <space>w <Plug>(easymotion-bd-w)
+nmap <space>w <Plug>(easymotion-overwin-w)
 
 " You can use other keymappings like <C-l> instead of <CR> if you want to
 " use these mappings as default search and somtimes want to move cursor with
