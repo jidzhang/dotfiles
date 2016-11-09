@@ -90,6 +90,11 @@ nmap <space>fed :e $MYVIMRC<cr>
 "iabbrev dts <C-R>=strftime("%H:%M %m/%d/%Y")<CR>
 iabbrev dts <C-R>=strftime("%Y-%m-%d %H:%M")<CR>
 
+if exists('+macmeta')
+    set macmeta
+endif
+set pastetoggle=<F2>
+
 "---------------------------------------------
 " Search setting
 "---------------------------------------------
@@ -108,11 +113,6 @@ set shiftwidth=4        " unify
 set noexpandtab         " real tabs please!
 set smarttab            " use tabs at the start of a line, spaces elsewhere
 set formatoptions+=mM   " so that vim can reformat multibyte text (e.g. Chinese)
-
-if exists('+macmeta')
-    set macmeta
-endif
-set pastetoggle=<F2>
 
 syntax on
 filetype on             " enable file type detection
@@ -235,7 +235,7 @@ Plugin 'kana/vim-textobj-user'
 Plugin 'kana/vim-textobj-lastpat'
 Plugin 'kana/vim-textobj-line'
 Plugin 'kana/vim-textobj-function'
-Plugin 'nelstrom/vim-qargs'
+"Plugin 'nelstrom/vim-qargs'
 "Plugin 'mileszs/ack.vim'
 "Plugin 't9md/vim-quickhl'
 Plugin 'scrooloose/syntastic'
@@ -418,7 +418,7 @@ endif
 "nnoremap <space>gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 "nmap <F4> :YcmDiags<CR>
 
-""================================
+""=========================================================
 " setting form easymotion
 " <Leader>f{char} to move to {char}
 map  <space>f <Plug>(easymotion-bd-f)
