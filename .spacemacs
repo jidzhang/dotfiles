@@ -38,7 +38,11 @@ values."
      ;; ----------------------------------------------------------------
      helm
      (auto-completion :variables
-                      auto-completion-tab-key-behavior 'complete)
+                      auto-completion-return-key-behavior 'complete
+                      auto-completion-tab-key-behavior 'cycle
+                      auto-completion-complete-with-key-sequence 'jk
+                      auto-completion-complete-with-key-sequence-delay 0.1
+                      auto-completion-private-snippets-directory nil)
      better-defaults
      chinese
      (c-c++ :variables
@@ -56,12 +60,12 @@ values."
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom)
+     osx
      smex
      semantic
      syntax-checking
      version-control
      ;; spell-checking
-     ;; mylayer
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -312,7 +316,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
    ;; '(debug-on-error t)
    '(menu-bar-mode t)
    '(tool-bar-mode nil)
-   ;; '(global-company-mode t)
+   '(global-company-mode t)
    '(company-idle-delay 0.1)
    '(company-minimum-prefix-length 1))
   )
