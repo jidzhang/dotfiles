@@ -1,6 +1,7 @@
 [user]
 	name = you
 	email = YourName@email.com
+[credential]
 [push]
 	default = simple
 [color]
@@ -17,3 +18,7 @@
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 [gc]
 	auto = 256
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	required = true
