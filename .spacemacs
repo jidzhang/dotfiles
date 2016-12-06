@@ -37,26 +37,25 @@ values."
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      helm
-     (auto-completion :variables
-                      auto-completion-return-key-behavior 'complete
-                      auto-completion-tab-key-behavior 'cycle
-                      auto-completion-complete-with-key-sequence 'jk
-                      auto-completion-complete-with-key-sequence-delay 0.1
-                      auto-completion-private-snippets-directory nil)
+     auto-completion
      better-defaults
-     chinese
-     (c-c++ :variables
-            c-c++-default-mode-for-headers 'c++-mode)
      emacs-lisp
      git
      markdown
      org
-     python
-     ruby
-     ruby-on-rails
-     clojure
+     ;; python
+     ;; django
+     ;; ruby
+     ;; ruby-on-rails
      html
      javascript
+     ;; typescript
+     ;; clojure
+     ;; common-lisp
+     ;; scheme
+     ;; racket
+     ;; react
+     ;; sql
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom)
@@ -100,7 +99,7 @@ values."
    ;; This variable has no effect if Emacs is launched with the parameter
    ;; `--insecure' which forces the value of this variable to nil.
    ;; (default t)
-   dotspacemacs-elpa-https nil
+   dotspacemacs-elpa-https t
    ;; Maximum allowed time in seconds to contact an ELPA repository.
    dotspacemacs-elpa-timeout 5
    ;; If non nil then spacemacs will check for updates at startup
@@ -143,7 +142,8 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(spacemacs-dark
+   dotspacemacs-themes '(solarized-light
+                         spacemacs-dark
                          spacemacs-light
                          solarized-light
                          solarized-dark
@@ -279,7 +279,8 @@ values."
    ;; (default nil)
    dotspacemacs-smartparens-strict-mode nil
    ;; If non-nil pressing the closing parenthesis `)' key in insert mode passes
-   ;; over any automatically added closing parenthesis, bracket, quote, etc¡­
+   ;; over any automatically added closing parenthesis, bracket, quote, etc…
+
    ;; This can be temporary disabled by pressing `C-q' before `)'. (default nil)
    dotspacemacs-smart-closing-parenthesis nil
    ;; Select a scope to highlight delimiters. Possible values are `any',
@@ -302,7 +303,7 @@ values."
    ;; `trailing' to delete only the whitespace at end of lines, `changed'to
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
    ;; (default nil)
-   dotspacemacs-whitespace-cleanup nil
+   dotspacemacs-whitespace-cleanup 'trailing
    ))
 
 (defun dotspacemacs/user-init ()
@@ -316,9 +317,10 @@ before packages are loaded. If you are unsure, you should try in setting them in
    ;; '(debug-on-error t)
    '(menu-bar-mode t)
    '(tool-bar-mode nil)
-   '(global-company-mode t)
+   ;; '(global-company-mode t)
    '(company-idle-delay 0.1)
    '(company-minimum-prefix-length 1))
+  (set-fontset-font t 'han (font-spec :family "Microsoft Yahei" :size 14))
   )
 
 (defun dotspacemacs/user-config ()
