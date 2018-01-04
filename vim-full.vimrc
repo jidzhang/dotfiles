@@ -77,6 +77,12 @@ if has("gui")
     imap <C-CR> <C-o>O
 endif
 
+" setting for quickhl
+nmap <Space>m <Plug>(quickhl-manual-this)
+xmap <Space>m <Plug>(quickhl-manual-this)
+nmap <Space>M <Plug>(quickhl-manual-reset)
+xmap <Space>M <Plug>(quickhl-manual-reset)
+
 " setting for nerdtree
 nmap <space>ft  :NERDTreeToggle<CR>
 nmap <space>bd  :bd<CR>
@@ -216,6 +222,7 @@ Plugin 'Valloric/YouCompleteMe'
 "Plugin 'Lokaltog/vim-powerline'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
+Plugin 't9md/vim-quickhl'
 
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'mattn/emmet-vim'
