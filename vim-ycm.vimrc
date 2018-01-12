@@ -175,6 +175,10 @@ if has("multi_byte")
 		set encoding=euc-jp
 		set termencoding=euc-jp
 		set fileencoding=euc-jp
+	else
+		set encoding=utf-8
+		set termencoding=utf-8
+		set fileencoding=utf-8
 	endif
 	"" Detect UTF-8 locale, and replace CJK setting if needed
 	if v:lang =~ "utf8$" || v:lang =~ "UTF-8$"
@@ -246,9 +250,9 @@ Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-lastpat'
 Plug 'kana/vim-textobj-line'
 Plug 'kana/vim-textobj-function'
-"Plug 'nelstrom/vim-qargs'
+Plug 'nelstrom/vim-qargs'
 Plug 'mileszs/ack.vim'
-Plug 'w0rp/ale'
+"Plug 'w0rp/ale'
 "Plug 'scrooloose/syntastic'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
