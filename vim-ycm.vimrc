@@ -68,8 +68,11 @@ nmap <leader>w  :w<cr>
 nmap <leader>q  :q<cr>
 nmap <leader>d  :bd<cr>
 nmap <leader>n  :bn<cr>
+nmap <space>x   :x<cr>
+nmap <space>qa  :qa!<cr>
 "支持单行和多行的选择，//格式
 map <c-h>  <leader>c<space>
+map <space>; <leader>c<space>
 
 if has("gui")
 	nmap <S-CR> i<CR><ESC>
@@ -212,6 +215,7 @@ set rtp+=~/.vim/plugged/vim-plug
 call plug#begin('~/.vim/plugged')
 " let plug manage plug
 Plug 'jidzhang/vim-plug'
+Plug 'jidzhang/vim-nginx'
 
 " repos on github
 Plug 'jiangmiao/auto-pairs'
@@ -229,7 +233,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 't9md/vim-quickhl'
 
-Plug 'vim-ruby/vim-ruby'
+Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
 Plug 'mattn/emmet-vim'
 
 "super power motion:
@@ -241,7 +245,7 @@ Plug 'haya14busa/incsearch-fuzzy.vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-abolish'
-Plug 'tpope/vim-rails'
+Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 Plug 'tpope/vim-dispatch'
@@ -253,7 +257,7 @@ Plug 'kana/vim-textobj-function'
 Plug 'nelstrom/vim-qargs'
 Plug 'mileszs/ack.vim'
 "Plug 'w0rp/ale'
-"Plug 'scrooloose/syntastic'
+Plug 'scrooloose/syntastic'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 
@@ -273,29 +277,29 @@ Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 "Plug 'roxma/vim-hug-neovim-rpc'
 "endif
 
-Plug 'terryma/vim-multiple-cursors'
-Plug 'terryma/vim-expand-region'
+"Plug 'terryma/vim-multiple-cursors'
+"Plug 'terryma/vim-expand-region'
 Plug 'terryma/vim-smooth-scroll'
 
 Plug 'mhinz/vim-signify'
-Plug 'justinmk/vim-sneak'
+"Plug 'justinmk/vim-sneak'
 
 Plug 'Yggdroot/indentLine'
 Plug 'godlygeek/csapprox'
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
-Plug 'altercation/vim-colors-solarized'
+"Plug 'altercation/vim-colors-solarized'
 Plug 'sickill/vim-monokai'
-Plug 'vimchina/vimcdoc'
-Plug 'vimchina/vim-fencview'
+"Plug 'vimchina/vimcdoc'
+"Plug 'vimchina/vim-fencview'
 
-Plug 'vim-scripts/taglist.vim'
-Plug 'vim-scripts/a.vim'
-Plug 'vim-scripts/molokai'
+"Plug 'vim-scripts/taglist.vim'
+"Plug 'vim-scripts/a.vim'
+"Plug 'vim-scripts/molokai'
 
 "AutoCompl setting
-Plug 'vim-scripts/L9'
-Plug 'vim-scripts/FuzzyFinder'
+"Plug 'vim-scripts/L9'
+"Plug 'vim-scripts/FuzzyFinder'
 "Plug 'vim-scripts/AutoComplPop'
 
 " non github repos
