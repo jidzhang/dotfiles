@@ -1,5 +1,6 @@
 set nocp
 source $VIMRUNTIME/vimrc_example.vim
+source $VIMRUNTIME/macros/matchit.vim
 set nobackup
 if exists('+undofile')
 	set undofile
@@ -15,6 +16,9 @@ nmap <leader>d :bd<cr>
 nmap <leader>n :db<cr>
 nmap <space>bd :bd<cr>
 nmap <space>bn :bn<cr>
+nmap <space>fed :e $MYVIMRC<cr>
+nmap <space>fs :w<cr>
+nmap <space>qa :qa!<cr>
 
 set ignorecase
 set incsearch
@@ -23,3 +27,4 @@ set softtabstop=4
 set shiftwidth=4
 set tabstop=4
 set smarttab
+set pastetoggle=<F2>
