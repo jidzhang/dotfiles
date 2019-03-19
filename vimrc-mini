@@ -1,0 +1,25 @@
+set nocp
+source $VIMRUNTIME/vimrc_example.vim
+set nobackup
+if exists('+undofile')
+	set undofile
+endif
+set laststatus=2
+set showmatch
+set mouse=a
+
+nmap <leader>x :x<cr>
+nmap <leader>w :w<cr>
+nmap <leader>q :q<cr>
+nmap <leader>d :bd<cr>
+nmap <leader>n :db<cr>
+nmap <space>bd :bd<cr>
+nmap <space>bn :bn<cr>
+
+set ignorecase
+set incsearch
+set hlsearch
+set softtabstop=4
+set shiftwidth=4
+set tabstop=4
+set smarttab
