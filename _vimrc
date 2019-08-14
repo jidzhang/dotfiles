@@ -1,13 +1,39 @@
 set nocompatible
-source $VIMRUNTIME/vimrc_example.vim
-source $VIMRUNTIME/macros/matchit.vim
+
+if !has('nvim')
+	source $VIMRUNTIME/vimrc_example.vim
+	source $VIMRUNTIME/macros/matchit.vim
+else
+	"Only do this part when Vim was compiled with the +eval feature.
+	if has('eval')
+		" Enable file type detection.
+		" Use the default filetype settings, so that mail gets 'tw' set to 72,
+		" 'cindent' is on in C files, etc.
+		" Also load indent files, to automatically do language-dependent indenting.
+		" Revert with ":filetype off".
+		filetype plugin indent on
+		" Put these in an autocmd group, so that you can revert them with:
+		" ":augroup vimStartup | au! | augroup END"
+		augroup vimStartup
+			au!
+			" When editing a file, always jump to the last known cursor position.
+			" Don't do it when the position is invalid, when inside an event handler
+			" (happens when dropping a file on gvim) and for a commit message (it's
+			" likely a different one than last time).
+			autocmd BufReadPost *
+						\ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
+						\ |   exe "normal! g`\""
+						\ | endif
+		augroup END
+	endif
+endif
 
 if(has("win32") || has("win95") || has("win64") || has("win16"))
-	let g:vimrc_iswindows=1
+	let g:iswindows=1
 else
-	let g:vimrc_iswindows=0
+	let g:iswindows=0
 endif
-if (g:vimrc_iswindows)
+if (g:iswindows)
 	source $VIMRUNTIME/mswin.vim
 	behave mswin
 	set diffexpr=MyDiff()
@@ -47,7 +73,7 @@ set nobackup
 if exists('+undofile')
 	set undofile
 endif
-set noundofile
+"set noundofile
 set laststatus=2
 set history=500
 set ruler
@@ -61,6 +87,7 @@ endif
 "set mouse=a
 set cursorline
 "set cursorcolumn
+set number
 
 " Fast saving
 nmap <leader>x  :x<cr>
@@ -78,10 +105,10 @@ if has("gui")
 endif
 
 " setting for quickhl
-nmap <Space>m <Plug>(quickhl-manual-this)
-xmap <Space>m <Plug>(quickhl-manual-this)
-nmap <Space>M <Plug>(quickhl-manual-reset)
-xmap <Space>M <Plug>(quickhl-manual-reset)
+"nmap <Space>m <Plug>(quickhl-manual-this)
+"xmap <Space>m <Plug>(quickhl-manual-this)
+"nmap <Space>M <Plug>(quickhl-manual-reset)
+"xmap <Space>M <Plug>(quickhl-manual-reset)
 
 " setting for nerdtree
 nmap <space>ft  :NERDTreeToggle<CR>
@@ -134,7 +161,9 @@ set foldopen -=undo     " don't open folds when you undo stuff
 
 "-----------------------------------------------------------
 set browsedir=buffer   " use directory of the related buffer for file browser
-set clipboard+=unnamed " use clipboard register '*' for all y, d, c, p ops
+"set clipboard^=unnamed,unnamedplus " use clipboard register '*' for all y, d, c, p ops
+set clipboard-=unnamedplus
+set clipboard-=unnamed
 set viminfo+=!         " make sure it can save viminfo
 set isk+=$,%,#,-       " none of these should be word dividers
 set confirm            " raise a dialog confirm whether to save changed buffer
@@ -160,9 +189,11 @@ if has("multi_byte")
 	"" CJK environment detection and corresponding setting
 	if v:lang =~ "^zh_CN"
 		"" Use cp936 to support GBK, euc-cn == gb2312
-		set encoding=cp936
-		set termencoding=cp936
-		set fileencoding=cp936
+		if !has('nvim')
+			set encoding=cp936
+			set termencoding=cp936
+			set fileencoding=cp936
+		endif
 	elseif v:lang =~ "^zh_TW"
 		"" cp950, big5 or euc-tw
 		set encoding=big5
@@ -210,14 +241,18 @@ set rtp+=~/.vim/plugged/vim-plug
 call plug#begin('~/.vim/plugged')
 " let Vundle manage vundle
 Plug 'jidzhang/vim-plug'
+Plug 'jidzhang/vim-nginx'
 
 " Very great plugins
 " original repos on github
+"Plug 'Raimondi/delimitMate'
 Plug 'jiangmiao/auto-pairs'
 "Plug 'hdima/python-syntax'
 "Plug 'python-mode/python-mode'
 "Plug 'Valloric/ListToggle'
-"Plug 'Valloric/YouCompleteMe'
+if (g:iswindows==0)
+	Plug 'Valloric/YouCompleteMe'
+endif
 
 Plug 'ctrlpvim/ctrlp.vim'
 "Plug 'SirVer/ultisnips'
@@ -226,10 +261,10 @@ Plug 'ctrlpvim/ctrlp.vim'
 "Plug 'Lokaltog/vim-powerline'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 't9md/vim-quickhl'
+"Plug 't9md/vim-quickhl'
 
-Plug 'vim-ruby/vim-ruby'
-Plug 'mattn/emmet-vim'
+"Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
+"Plug 'mattn/emmet-vim'
 
 "super power motion:
 Plug 'easymotion/vim-easymotion'
@@ -237,40 +272,49 @@ Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/incsearch-easymotion.vim'
 Plug 'haya14busa/incsearch-fuzzy.vim'
 
+Plug 'editorconfig/editorconfig-vim'
+
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-abolish'
-Plug 'tpope/vim-rails'
+Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-commentary'
 Plug 'kana/vim-textobj-user'
+Plug 'kana/vim-textobj-entire'
 Plug 'kana/vim-textobj-lastpat'
 Plug 'kana/vim-textobj-line'
 Plug 'kana/vim-textobj-function'
-"Plug 'nelstrom/vim-qargs'
-Plug 'mileszs/ack.vim'
-Plug 'w0rp/ale'
-"Plug 'scrooloose/syntastic'
+Plug 'nelstrom/vim-visual-star-search'
+Plug 'nelstrom/vim-qargs'
+Plug 'nelstrom/vim-mac-classic-theme'
+"Plug 'mileszs/ack.vim'
+"Plug 'w0rp/ale'
+Plug 'scrooloose/syntastic'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 
-Plug 'Shougo/neocomplete.vim'
-Plug 'Shougo/neosnippet-snippets'
-Plug 'Shougo/vimshell.vim'
-Plug 'Shougo/unite.vim'
-Plug 'Shougo/neco-vim'
-Plug 'c9s/perlomni.vim'
-Plug 'ternjs/tern_for_vim'
-
-"if has('nvim')
-"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugs' }
-"else
-"Plug 'Shougo/deoplete.nvim'
-"Plug 'roxma/nvim-yarp'
-"Plug 'roxma/vim-hug-neovim-rpc'
-"endif
+if (g:iswindows)
+	Plug 'roxma/nvim-yarp'
+	Plug 'roxma/vim-hug-neovim-rpc'
+	if has('nvim')
+		Plug 'ncm2/ncm2'
+		Plug 'ncm2/ncm2-bufword'
+		Plug 'ncm2/ncm2-path'
+	else
+		"Plug 'Shougo/deoplete.nvim'
+		Plug 'Shougo/neocomplete.vim'
+		Plug 'Shougo/neosnippet-snippets'
+		Plug 'Shougo/vimshell.vim'
+		Plug 'Shougo/unite.vim'
+		Plug 'Shougo/neco-vim'
+		"Plug 'c9s/perlomni.vim'
+		"Plug 'ternjs/tern_for_vim'
+	endif
+endif
 
 Plug 'terryma/vim-multiple-cursors'
 Plug 'terryma/vim-expand-region'
@@ -283,7 +327,7 @@ Plug 'Yggdroot/indentLine'
 Plug 'godlygeek/csapprox'
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
-Plug 'altercation/vim-colors-solarized'
+"Plug 'altercation/vim-colors-solarized'
 Plug 'sickill/vim-monokai'
 "Plug 'vimchina/vimcdoc'
 "Plug 'vimchina/vim-fencview'
@@ -307,88 +351,191 @@ Plug 'sickill/vim-monokai'
 call plug#end()
 filetype plugin indent on
 
-"=====================================
-" Setting for NeoComplete
-"Note: This option must be set in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
-" Disable AutoComplPop.
-let g:acp_enableAtStartup = 0
-" Use neocomplete.
-let g:neocomplete#enable_at_startup = 1
-" Use smartcase.
-let g:neocomplete#enable_smart_case = 1
-" Set minimum syntax keyword length.
-let g:neocomplete#sources#syntax#min_keyword_length = 3
+if (g:iswindows)
+	let g:python3_host_prog='C:/Anaconda3/python.exe'
 
-" Define dictionary.
-let g:neocomplete#sources#dictionary#dictionaries = {
-			\ 'default' : '',
-			\ 'vimshell' : $HOME.'/.vimshell_hist',
-			\ 'scheme' : $HOME.'/.gosh_completions'
-			\ }
-
-" Define keyword.
-if !exists('g:neocomplete#keyword_patterns')
-	let g:neocomplete#keyword_patterns = {}
+	if has('nvim')
+		let g:ncm2#enable_at_startup = 1
+		let g:neocomplete#enable_at_startup = 0
+		let g:deoplete#enable_at_startup = 0
+	else
+		let g:ncm2#enable_at_startup = 0
+		let g:neocomplete#enable_at_startup = 1
+		let g:deoplete#enable_at_startup = 0
+	endif
+	let g:ycm#enable_at_startup = 0
+else
+	let g:ycm#enable_at_startup = 1
+	let g:ncm2#enable_at_startup = 0
+	let g:neocomplete#enable_at_startup = 0
+	let g:deoplete#enable_at_startup = 0
 endif
-let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 
-" Plug key-mappings.
-inoremap <expr><C-g>     neocomplete#undo_completion()
-inoremap <expr><C-l>     neocomplete#complete_common_string()
+if (g:ncm2#enable_at_startup)
+	"====================================
+	" Setting for Ncm2
+	" enable ncm2 for all buffers
+	autocmd BufEnter * call ncm2#enable_for_buffer()
 
-" Recommended key-mappings.
-" <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-	return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
-	" For no inserting <CR> key.
-	"return pumvisible() ? "\<C-y>" : "\<CR>"
-endfunction
-" <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-" Close popup by <Space>.
-"inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
+	" IMPORTANT: :help Ncm2PopupOpen for more information
+	set completeopt=noinsert,menuone,noselect
+	" suppress the annoying 'match x of y', 'The only match' and 'Pattern not
+	" found' messages
+	set shortmess+=c
 
-" AutoComplPop like behavior.
-"let g:neocomplete#enable_auto_select = 1
+	" CTRL-C doesn't trigger the InsertLeave autocmd . map to <ESC> instead.
+	inoremap <c-c> <ESC>
 
-" Shell like behavior(not recommended).
-"set completeopt+=longest
-"let g:neocomplete#enable_auto_select = 1
-"let g:neocomplete#disable_auto_complete = 1
-"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
+	" When the <Enter> key is pressed while the popup menu is visible, it only
+	" hides the menu. Use this mapping to close the menu and also start a new
+	" line.
+	inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
 
-" Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+	" Use <TAB> to select the popup menu:
+	inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+	inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
-" Enable heavy omni completion.
-if !exists('g:neocomplete#sources#omni#input_patterns')
-	let g:neocomplete#sources#omni#input_patterns = {}
+	" wrap existing omnifunc
+	" Note that omnifunc does not run in background and may probably block the
+	" editor. If you don't want to be blocked by omnifunc too often, you could
+	" add 180ms delay before the omni wrapper:
+	"  'on_complete': ['ncm2#on_complete#delay', 180,
+	"               \ 'ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
+	au User Ncm2Plugin call ncm2#register_source({
+				\ 'name' : 'css',
+				\ 'priority': 9,
+				\ 'subscope_enable': 1,
+				\ 'scope': ['css','scss'],
+				\ 'mark': 'css',
+				\ 'word_pattern': '[\w\-]+',
+				\ 'complete_pattern': ':\s*',
+				\ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
+				\ })
 endif
-"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
 
-" For perlomni.vim setting.
-" https://github.com/c9s/perlomni.vim
-let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+if (g:neocomplete#enable_at_startup)
+	"=====================================
+	" Setting for NeoComplete
+	"Note: This option must be set in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
+	" Disable AutoComplPop.
+	let g:acp_enableAtStartup = 0
+	" Use neocomplete.
+	let g:neocomplete#enable_at_startup = 1
+	" Use smartcase.
+	let g:neocomplete#enable_smart_case = 1
+	" Set minimum syntax keyword length.
+	let g:neocomplete#sources#syntax#min_keyword_length = 3
+	" Define dictionary.
+	let g:neocomplete#sources#dictionary#dictionaries = {
+				\ 'default' : '',
+				\ 'vimshell' : $HOME.'/.vimshell_hist',
+				\ 'scheme' : $HOME.'/.gosh_completions'
+				\ }
+	" Define keyword.
+	if !exists('g:neocomplete#keyword_patterns')
+		let g:neocomplete#keyword_patterns = {}
+	endif
+	let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+	" Plug key-mappings.
+	inoremap <expr><C-g>     neocomplete#undo_completion()
+	inoremap <expr><C-l>     neocomplete#complete_common_string()
+	" Recommended key-mappings.
+	" <CR>: close popup and save indent.
+	inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+	function! s:my_cr_function()
+		return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+		" For no inserting <CR> key.
+		"return pumvisible() ? "\<C-y>" : "\<CR>"
+	endfunction
+	" <TAB>: completion.
+	inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+	" <C-h>, <BS>: close popup and delete backword char.
+	inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+	inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+	" Close popup by <Space>.
+	"inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
+
+	" AutoComplPop like behavior.
+	"let g:neocomplete#enable_auto_select = 1
+
+	" Shell like behavior(not recommended).
+	"set completeopt+=longest
+	"let g:neocomplete#enable_auto_select = 1
+	"let g:neocomplete#disable_auto_complete = 1
+	"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
+
+	" Enable omni completion.
+	autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+	autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+	autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+	autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+	autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+	" Enable heavy omni completion.
+	if !exists('g:neocomplete#sources#omni#input_patterns')
+		let g:neocomplete#sources#omni#input_patterns = {}
+	endif
+	"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+	"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+	"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+
+	" For perlomni.vim setting.
+	" https://github.com/c9s/perlomni.vim
+	let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+endif
+
+if (g:ycm#enable_at_startup)
+	" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+	let g:UltiSnipsExpandTrigger="<tab>"
+	let g:UltiSnipsJumpForwardTrigger="<c-b>"
+	let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+	" If you want :UltiSnipsEdit to split your window.
+	let g:UltiSnipsEditSplit="vertical"
+
+
+	let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
+	let g:ycm_python_binary_path='python'
+	"let g:ycm_key_list_select_completion=[]
+	"let g:ycm_key_list_previous_completion=[]
+	let g:ycm_error_symbol = '>>'
+	let g:ycm_warning_symbol = '>*'
+	nnoremap <space>gl :YcmCompleter GoToDeclaration<CR>
+	nnoremap <space>gf :YcmCompleter GoToDefinition<CR>
+	nnoremap <space>gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+	nmap <F4> :YcmDiags<CR>
+	"是否开启语义补全"
+	let g:ycm_seed_identifiers_with_syntax=1
+	"是否在注释中也开启补全"
+	let g:ycm_complete_in_comments=1
+	let g:ycm_collect_identifiers_from_comments_and_strings = 0
+	"开始补全的字符数"
+	let g:ycm_min_num_of_chars_for_completion=1
+	"补全后自动关机预览窗口"
+	let g:ycm_autoclose_preview_window_after_completion=1
+	" 禁止缓存匹配项,每次都重新生成匹配项"
+	"let g:ycm_cache_omnifunc=0
+	"字符串中也开启补全"
+	let g:ycm_complete_in_strings = 1
+	"离开插入模式后自动关闭预览窗口"
+	autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+	"上下左右键行为"
+	"inoremap <expr> <Down>     pumvisible() ? '\<C-n>' : '\<Down>'
+	"inoremap <expr> <Up>       pumvisible() ? '\<C-p>' : '\<Up>'
+	"inoremap <expr> <PageDown> pumvisible() ? '\<PageDown>\<C-p>\<C-n>' : '\<PageDown>'
+	"inoremap <expr> <PageUp>   pumvisible() ? '\<PageUp>\<C-p>\<C-n>' : '\<PageUp>'
+endif
+
 
 "===========================
 set t_Co=256
 set laststatus=2
 
-let g:deoplete#enable_at_startup = 1
-
 "let g:fencview_autodetect=0
 "let g:fencview_auto_patterns='*.txt,*.md,*.htm{l\=},*.c,*.cpp,*.py,*.php'
 "let g:vim_markdown_folding_disabled=1
+
+let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 
 "---------------------------------------------
 " Gui-font
@@ -409,7 +556,7 @@ if has("gui")
 	"set guioptions -=r
 	"set guioptions +=b
 	"set guifont=courier_new:h10
-	if (g:vimrc_iswindows)
+	if (g:iswindows)
 		set guifont=Monaco:h10
 	else
 		set guifont=Monaco:h12
@@ -417,13 +564,75 @@ if has("gui")
 	"set background=light
 	"let g:solarized_italic=0
 	"colo solarized
+	"au GUIEnter * simalt ~x
 else
 	"colo blue
 	"colo default
 	"colo molokai
+	if has('nvim')
+		set guifont=Monaco:h11
+	endif
 endif
-"colo evening
-colo monokai
+"colo monokai
+colo evening
+
+if has("gui_running")
+	function! ScreenFilename()
+		if has('amiga')
+			return "s:.vimsize"
+		elseif has('win32')
+			return $HOME.'\_vimsize'
+		else
+			return $HOME.'/.vimsize'
+		endif
+	endfunction
+
+	function! ScreenRestore()
+		" Restore window size (columns and lines) and position
+		" from values stored in vimsize file.
+		" Must set font first so columns and lines are based on font size.
+		let f = ScreenFilename()
+		if has("gui_running") && g:screen_size_restore_pos && filereadable(f)
+			let vim_instance = (g:screen_size_by_vim_instance==1?(v:servername):'GVIM')
+			for line in readfile(f)
+				let sizepos = split(line)
+				if len(sizepos) == 5 && sizepos[0] == vim_instance
+					silent! execute "set columns=".sizepos[1]." lines=".sizepos[2]
+					silent! execute "winpos ".sizepos[3]." ".sizepos[4]
+					return
+				endif
+			endfor
+		endif
+	endfunction
+
+	function! ScreenSave()
+		" Save window size and position.
+		if has("gui_running") && g:screen_size_restore_pos
+			let vim_instance = (g:screen_size_by_vim_instance==1?(v:servername):'GVIM')
+			let data = vim_instance . ' ' . &columns . ' ' . &lines . ' ' .
+						\ (getwinposx()<0?0:getwinposx()) . ' ' .
+						\ (getwinposy()<0?0:getwinposy())
+			let f = ScreenFilename()
+			if filereadable(f)
+				let lines = readfile(f)
+				call filter(lines, "v:val !~ '^" . vim_instance . "\\>'")
+				call add(lines, data)
+			else
+				let lines = [data]
+			endif
+			call writefile(lines, f)
+		endif
+	endfunction
+
+	if !exists('g:screen_size_restore_pos')
+		let g:screen_size_restore_pos = 1
+	endif
+	if !exists('g:screen_size_by_vim_instance')
+		let g:screen_size_by_vim_instance = 1
+	endif
+	autocmd VimEnter * if g:screen_size_restore_pos == 1 | call ScreenRestore() | endif
+	autocmd VimLeavePre * if g:screen_size_restore_pos == 1 | call ScreenSave() | endif
+endif
 
 " filetype indentation
 if has("autocmd")
@@ -434,55 +643,16 @@ if has("autocmd")
 	autocmd FileType javascript setlocal ts=4 sts=4 sw=4 noet
 	autocmd FileType html setlocal ts=4 sts=4 sw=4 et
 	autocmd FileType css setlocal iskeyword+=-
+	autocmd BufWritePre * %s/\s\+$//e
 endif
 
 " Tabularize mappings
-nmap <Leader>a=		:Tabularize /=<CR>
-nmap <Leader>a:		:Tabularize /:<CR>
-nmap <Leader>a::	:Tabularize /:\zs<CR>
-nmap <Leader>a,		:Tabularize /,<CR>
-nmap <Leader>a<Bar> :Tabularize /<CR>
-
-"" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-"let g:UltiSnipsExpandTrigger="<tab>"
-"let g:UltiSnipsJumpForwardTrigger="<c-b>"
-"let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
-"" If you want :UltiSnipsEdit to split your window.
-"let g:UltiSnipsEditSplit="vertical"
-
-
-"let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
-"let g:ycm_python_binary_path='python'
-""let g:ycm_key_list_select_completion=[]
-""let g:ycm_key_list_previous_completion=[]
-"let g:ycm_error_symbol = '>>'
-"let g:ycm_warning_symbol = '>*'
-"nnoremap <space>gl :YcmCompleter GoToDeclaration<CR>
-"nnoremap <space>gf :YcmCompleter GoToDefinition<CR>
-"nnoremap <space>gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
-"nmap <F4> :YcmDiags<CR>
-""是否开启语义补全"
-"let g:ycm_seed_identifiers_with_syntax=1
-""是否在注释中也开启补全"
-"let g:ycm_complete_in_comments=1
-"let g:ycm_collect_identifiers_from_comments_and_strings = 0
-""开始补全的字符数"
-"let g:ycm_min_num_of_chars_for_completion=1
-""补全后自动关机预览窗口"
-"let g:ycm_autoclose_preview_window_after_completion=1
-"" 禁止缓存匹配项,每次都重新生成匹配项"
-""let g:ycm_cache_omnifunc=0
-""字符串中也开启补全"
-"let g:ycm_complete_in_strings = 1
-""离开插入模式后自动关闭预览窗口"
-"autocmd InsertLeave * if pumvisible() == 0|pclose|endif
-""上下左右键行为"
-""inoremap <expr> <Down>     pumvisible() ? '\<C-n>' : '\<Down>'
-""inoremap <expr> <Up>       pumvisible() ? '\<C-p>' : '\<Up>'
-""inoremap <expr> <PageDown> pumvisible() ? '\<PageDown>\<C-p>\<C-n>' : '\<PageDown>'
-""inoremap <expr> <PageUp>   pumvisible() ? '\<PageUp>\<C-p>\<C-n>' : '\<PageUp>'
-
+nmap <Leader>t=		:Tabularize /=<CR>
+nmap <Leader>tt		:Tabularize /\/\/<CR>
+nmap <Leader>t:		:Tabularize /:<CR>
+nmap <Leader>t::	:Tabularize /:\zs<CR>
+nmap <Leader>t,		:Tabularize /,<CR>
+nmap <Leader>t<Bar> :Tabularize /<CR>
 
 "=========================================================
 " setting for easymotion
@@ -555,3 +725,4 @@ function! s:config_easyfuzzymotion(...) abort
 				\ }), get(a:, 1, {}))
 endfunction
 noremap <silent><expr> <Space>/ incsearch#go(<SID>config_easyfuzzymotion())
+
