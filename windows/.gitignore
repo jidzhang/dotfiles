@@ -1,0 +1,5 @@
+# Sensitive info
+.gitconfig
+.ssh/
+.code-review-graph/
+.claude/skills/pptx-report/template.py
