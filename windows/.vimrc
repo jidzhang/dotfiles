@@ -8,7 +8,7 @@ set number
 colorscheme evening
 
 " 高亮当前行
-"set cursorline
+set cursorline
 
 " 设置 Leader 键（支持 \ 和 Space 双重触发）
 let mapleader = '\'
@@ -21,6 +21,8 @@ set hlsearch
 set smartcase
 "set clipboard=unnamed
 
+" 缩短按键序列超时，解决ESC延迟问题
+set timeoutlen=300 ttimeoutlen=10
 " 重新定义ESC
 inoremap jj <Esc>
 "inoremap jk <Esc>
@@ -41,8 +43,6 @@ imap <C-CR> <ESC>O
 
 " 使用 VS 的智能补全（Ctrl+Space）
 "inoremap <C-Space> <C-X><C-O>
-
-"source $VIM/_vimrc
 
 " Vim with all enhancements
 if !has("nvim")

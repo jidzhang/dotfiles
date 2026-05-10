@@ -1,0 +1,47 @@
+nmap <Space>feR :so ~/_vsvimrc<CR>
+nmap <Space>fed :e ~/_vsvimrc<CR>
+nmap <Space>fs :w<CR>
+nmap <Space>; A;<Esc>
+
+" 启用行号
+set number
+
+" 高亮当前行
+set cursorline
+
+" 设置 Leader 键（默认为 \）
+"let mapleader = ","
+
+" 快速保存
+nmap <leader>w :w<CR>
+
+set showcmd
+set ignorecase
+set incsearch
+set hlsearch
+set smartcase
+"set clipboard=unnamed
+
+" 快速退出插入模式
+"inoremap jj <Esc>
+" 重新定义ESC
+"inoremap jj <Esc>
+"inoremap jk <Esc>
+" 快速添加新的空行
+imap <S-CR> <ESC>o
+imap <C-CR> <ESC>O
+
+" 优化移动
+nnoremap <Space> 10j  " 空格键快速向下滚动
+"nnoremap <C-d> <C-d>zz  " 向下翻页并居中光标
+
+" 快速调用 VS 功能
+nnoremap gd :vsc Edit.GoToDefinition<CR>
+nnoremap <leader>d :vsc Edit.GoToDefinition<CR>
+nnoremap <leader>f :vsc Edit.FindInFiles<CR>
+
+" 保留 VS 的 Ctrl+/ 注释
+"inoremap <C-/> <C-X><C-O>
+
+" 使用 VS 的智能补全（Ctrl+Space）
+"inoremap <C-Space> <C-X><C-O>
