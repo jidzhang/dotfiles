@@ -1,0 +1,14 @@
+# 本目录不装 .gitconfig（仓库里是占位符，真机配置各归各处）
+.gitconfig
+
+# 个人本地覆盖，不进版本库
+*.local
+settings.local.json
+
+# 敏感信息
+.ssh/
+.aws/
+.netrc
+_netrc
+.env
+.env.local

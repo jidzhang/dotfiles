@@ -1,0 +1,19 @@
+# 安装脚本产生的备份
+*.bak
+
+# 个人本地覆盖，不进版本库
+.vimrc.local
+*.local
+
+# 编辑器 / 系统垃圾
+*~
+*.swp
+*.un~
+.DS_Store
+Thumbs.db
+
+# 敏感信息（如需在本仓库保存个人配置，务必排除这些）
+.ssh/
+.aws/
+.netrc
+_netrc

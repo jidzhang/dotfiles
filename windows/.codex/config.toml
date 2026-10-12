@@ -1,0 +1,11 @@
+model_provider = "glm"
+model = "glm-5.1"
+model_catalog_json = ".\\models.json"
+
+[model_providers.glm]
+name = "zhipu ai"
+base_url = "http://localhost:18765"
+wire_api = "responses"
+
+[windows]
+sandbox = "elevated"

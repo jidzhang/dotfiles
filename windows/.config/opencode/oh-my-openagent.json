@@ -1,0 +1,85 @@
+{
+  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-opencode/master/assets/oh-my-opencode.schema.json",
+  "agents": {
+    "sisyphus": {
+      "model": "zhipuai-coding-plan/glm-5.1",
+      "temperature": 0.1
+    },
+    "oracle": {
+      "model": "zhipuai-coding-plan/glm-5.1",
+      "temperature": 0.1
+    },
+    "librarian": {
+      "model": "zhipuai-coding-plan/glm-5-turbo",
+      "temperature": 0.1,
+      "prompt_append": "Prefer official documentation and GitHub repositories when searching."
+    },
+    "explore": {
+      "model": "zhipuai-coding-plan/glm-5-turbo",
+      "temperature": 0.1
+    },
+    "multimodal-looker": {
+      "model": "zhipuai-coding-plan/glm-5-turbo"
+    },
+    "prometheus": {
+      "model": "zhipuai-coding-plan/glm-5.1",
+      "temperature": 0.1
+    },
+    "metis": {
+      "model": "zhipuai-coding-plan/glm-5.1"
+    },
+    "momus": {
+      "model": "zhipuai-coding-plan/glm-5.1"
+    },
+    "atlas": {
+      "model": "zhipuai-coding-plan/glm-5.1"
+    },
+    "build": {
+      "model": "zhipuai-coding-plan/glm-5.1"
+    },
+    "plan": {
+      "model": "zhipuai-coding-plan/glm-5.1"
+    },
+    "hephaestus": {
+      "model": "zhipuai-coding-plan/glm-5.1"
+    },
+    "sisyphus-junior": {
+      "model": "zhipuai-coding-plan/glm-5.1"
+    },
+    "OpenCode-Builder": {
+      "model": "zhipuai-coding-plan/glm-5.1"
+    }
+  },
+  "categories": {
+    "visual-engineering": {
+      "model": "zhipuai-coding-plan/glm-5.1"
+    },
+    "ultrabrain": {
+      "model": "zhipuai-coding-plan/glm-5.1"
+    },
+    "quick": {
+      "model": "zhipuai-coding-plan/glm-5-turbo"
+    },
+    "unspecified-low": {
+      "model": "zhipuai-coding-plan/glm-5.1"
+    },
+    "unspecified-high": {
+      "model": "zhipuai-coding-plan/glm-5.1"
+    },
+    "writing": {
+      "model": "zhipuai-coding-plan/glm-5.1"
+    },
+    "deep": {
+      "model": "zhipuai-coding-plan/glm-5.1"
+    },
+    "artistry": {
+      "model": "zhipuai-coding-plan/glm-5.1"
+    }
+  },
+  "background_task": {
+    "defaultConcurrency": 2,
+    "providerConcurrency": {
+      "zhipuai-coding-plan": 2
+    }
+  }
+}

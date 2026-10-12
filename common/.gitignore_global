@@ -1,0 +1,22 @@
+# OS
+*~
+*.un~
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Editor
+*.swp
+.vscode/
+.idea/
+
+# Build
+__pycache__/
+*.pyc
+node_modules/
+
+# Secrets（本地覆盖/凭据不进任何仓库）
+.env
+.env.local
+
+**/.claude/settings.local.json

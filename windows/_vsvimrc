@@ -1,0 +1,59 @@
+" ============================================
+" VsVim 配置
+" ============================================
+
+" ----- 基本设置 -----
+set number
+set cursorline
+set showcmd
+set ignorecase
+set smartcase
+set incsearch
+set hlsearch
+set tabstop=4
+set shiftwidth=4
+set autoindent
+set noexpandtab
+"set whichwrap+=<,>,h,l
+set backspace=indent,eol,start
+set scrolloff=5
+"set clipboard=unnamed
+
+" ----- Leader 键（默认为 \）-----
+"let mapleader = ","
+
+" ----- 文件操作 -----
+nnoremap <leader>w :w<CR>
+nnoremap <Space>feR :so ~/_vsvimrc<CR>
+nnoremap <Space>fed :e ~/_vsvimrc<CR>
+nnoremap <Space>fs :w<CR>
+
+" ----- 快速编辑 -----
+nnoremap <Space>; A;<Esc>
+nnoremap Y y$
+vnoremap < <gv
+vnoremap > >gv
+inoremap <S-CR> <Esc>o
+inoremap <C-CR> <Esc>O
+
+" ----- 快速退出插入模式 -----
+inoremap jj <Esc>
+
+" ----- VS 功能集成 -----
+nnoremap gd :vsc Edit.GoToDefinition<CR>
+nnoremap gr :vsc Edit.FindAllReferences<CR>
+nnoremap gf :vsc Edit.FormatDocument<CR>
+nnoremap <leader>d :vsc Edit.GoToDefinition<CR>
+nnoremap <leader>f :vsc Edit.FindInFiles<CR>
+
+" ----- 搜索优化 -----
+nnoremap <leader>h :noh<CR>
+nnoremap n nzz
+nnoremap N Nzz
+
+" ----- 剪贴板 -----
+nnoremap <leader>y "+y
+nnoremap <leader>p "+p
+
+" ----- Buffer 切换 -----
+nnoremap <leader>b :ls<CR>:b

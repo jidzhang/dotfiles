@@ -1,0 +1,73 @@
+[user]
+	name = you
+	email = YourName@email.com
+
+[credential]
+	helper = cache --timeout=3600
+
+# ── Core ──
+[core]
+	autocrlf = input
+	excludesfile = ~/.gitignore_global
+	quotepath = false
+
+# ── Pull / Push / Fetch ──
+[pull]
+	rebase = true
+[push]
+	default = current
+	autoSetupRemote = true
+[fetch]
+	prune = true
+[rebase]
+	autoStash = true
+
+# ── Diff & Merge ──
+[diff]
+	algorithm = histogram
+	colorMoved = zebra
+	mnemonicPrefix = true
+[merge]
+	conflictstyle = zdiff3
+[rerere]
+	enabled = true
+
+# ── UI ──
+[color]
+	ui = auto
+[log]
+	abbrevCommit = true
+[branch]
+	sort = -committerdate
+[tag]
+	sort = version:refname
+[init]
+	defaultBranch = main
+[help]
+	autocorrect = 1
+
+# ── Aliases ──
+[alias]
+	st      = status -sb
+	co      = checkout
+	sw      = switch
+	br      = branch -vv
+	ci      = commit -v
+	amend   = commit --amend --no-edit
+	unstage = restore --staged
+	di      = diff
+	ds      = diff --staged
+	undo    = reset HEAD~1 --mixed
+	lg      = log --oneline --graph --all --decorate
+	ll      = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+	last    = log -1 HEAD --stat
+	pf      = push --force-with-lease
+	pushu   = push -u origin HEAD
+	sh      = stash
+	sha     = stash show -p
+	aliases = config --get-regexp alias
+	root    = rev-parse --show-toplevel
+	whoami  = config user.email
+
+[gc]
+	auto = 256
