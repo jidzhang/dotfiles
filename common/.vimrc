@@ -48,7 +48,7 @@ endif
 
 " ---------------------------------------------------------------- 编码
 set fileencoding=utf-8
-set fileencodings=ucs-bom,utf-8,gb18030,gbk,gb2312,big5,latin1
+set fileencodings=ucs-bom,utf-8,gb18030,gbk,gb2312,cp936,big5,latin1
 set fileformats=unix,dos,mac
 set ambiwidth=double
 
@@ -61,8 +61,10 @@ endif
 
 " ---------------------------------------------------------------- 界面
 set number
+set cursorline
 set ruler
 set laststatus=2
+set statusline=%F%m%r%h%w\ [F=%Y]\ [L=%l/%L,C=%c]\ [P=%P]\ %{&fenc!=''}?&fenc:&enc}
 set showcmd
 set showmode
 set wildmenu
@@ -83,7 +85,7 @@ if has('gui_running')
   set guioptions-=L          " 隐藏左侧滚动条
   set lines=40 columns=120
   if has('win32')
-    set guifont=JetBrains_Mono:h11
+    set guifont=JetBrains_Mono_NL:h11:cANSI:qDRAFT
   elseif has('mac')
     set guifont=Monaco:h13
   else
@@ -98,6 +100,11 @@ if !has('gui_running') && &term =~# 'xterm\|screen\|tmux'
   let &t_SR = "\e[4 q"
   let &t_ti .= "\e[2 q"
   let &t_te .= "\e[6 q"
+endif
+
+" Windows 终端（非 GUI）256 色兜底
+if has('win32') && !has('gui_running')
+  set t_Co=256
 endif
 
 " 恢复上次光标位置
@@ -115,12 +122,20 @@ set smartindent
 set cindent
 set backspace=indent,eol,start
 set confirm
+set hidden
+set mouse=a
+set timeoutlen=300 ttimeoutlen=10
 set viminfo+=!
 set isk+=$,%,#,-
 map Q gq
 " Neovim 已移除 pastetoggle（改用 :set paste）；仅 Vim 设置
 if !has('nvim')
   set pastetoggle=<F2>
+endif
+
+" Windows 路径用正斜杠（方便复制路径）
+if has('win32')
+  set shellslash
 endif
 
 set tabstop=4
@@ -164,6 +179,9 @@ augroup dotfiles_filetype
   autocmd FileType c,cpp setlocal noexpandtab tabstop=4 shiftwidth=4
   autocmd FileType javascript,typescript,json,yaml,yml,html,css,scss
         \ setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
+  " Nginx 配置沿用前端 2 空格
+  autocmd BufRead,BufNewFile */nginx/*,*.nginx,*nginx.conf
+        \ setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
   autocmd FileType text,markdown setlocal wrap linebreak nolist
 augroup END
 
@@ -191,6 +209,11 @@ nnoremap <leader>p  :bp<CR>
 
 " 文件浏览（内置 netrw，无需 NERDTree）
 nnoremap <leader>e  :Lexplore<CR>
+nnoremap <leader>E  :Sexplore<CR>
+
+" 显示切换 / 窗口均分
+nnoremap <leader>L :set list!<CR>:set list?<CR>
+nnoremap <leader>= <C-w>=
 
 " 收尾 / 搜索
 nnoremap <leader>/  :noh<CR>
@@ -225,9 +248,20 @@ function! s:TrimTrailingWhitespace()
   let l:save = winsaveview()
   keeppatterns %s/\s\+$//e
   call winrestview(l:save)
+  echo "已删除行尾空格"
 endfunction
 command! TrimTrailingWhitespace call s:TrimTrailingWhitespace()
 nnoremap <leader>T :TrimTrailingWhitespace<CR>
+
+" 压缩连续空行（<leader>B）
+function! s:ReduceBlankLines()
+  let l:save = winsaveview()
+  keeppatterns %s/\(\n\s*\)\{3,}/\r\r/e
+  call winrestview(l:save)
+  echo "已压缩空行"
+endfunction
+command! ReduceBlankLines call s:ReduceBlankLines()
+nnoremap <leader>B :ReduceBlankLines<CR>
 
 function! s:FileInfo()
   echo 'Enc=' . &fileencoding . ' FF=' . &fileformat . ' FT=' . &filetype
@@ -238,6 +272,67 @@ command! FileInfo call s:FileInfo()
 if has('gui_running')
   nnoremap <C-s> :w<CR>
   inoremap <C-s> <Esc>:w<CR>a
+endif
+
+" Windows 习惯按键（仅 win32；终端下未 behave mswin，不会全局劫持）
+if has('win32')
+  " 插入模式
+  inoremap <C-v> <C-r>+
+  inoremap <C-c> <Esc>yygi
+  inoremap <C-x> <Esc>ddgi
+  inoremap <C-z> <C-o>u
+  inoremap <C-y> <C-o><C-r>
+  inoremap <C-a> <Esc>ggVG
+  inoremap <C-f> <Esc>/
+  " 可视模式：Ctrl-C/X 进系统剪贴板（保留 Ctrl-V 块选择）
+  vnoremap <C-c> "+y
+  vnoremap <C-x> "+d
+  " 普通模式
+  nnoremap <C-a> ggVG
+  nnoremap <C-c> "+yy
+  " 传统 Windows 剪贴板键
+  map <C-Insert> "+y
+  imap <S-Insert> <C-r>+
+  cmap <S-Insert> <C-r>+
+  " 强制写入（PowerShell 回写）
+  cnoremap w!! w !powershell -Command "Set-Content -Path '%' -Value (Get-Content -Raw)"
+endif
+
+" Windows 外部 diff（处理空格路径；内部 diff 可用时不启用）
+if has('win32') && &diffopt !~# 'internal'
+  set diffexpr=MyDiff()
+  function MyDiff()
+    let opt = '-a --binary '
+    if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
+    if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
+    let arg1 = v:fname_in
+    if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
+    let arg1 = substitute(arg1, '!', '\!', 'g')
+    let arg2 = v:fname_new
+    if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
+    let arg2 = substitute(arg2, '!', '\!', 'g')
+    let arg3 = v:fname_out
+    if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
+    let arg3 = substitute(arg3, '!', '\!', 'g')
+    if $VIMRUNTIME =~ ' '
+      if &sh =~ '\<cmd'
+        if empty(&shellxquote)
+          let l:shxq_sav = ''
+          set shellxquote&
+        endif
+        let cmd = '"' . $VIMRUNTIME . '\diff"'
+      else
+        let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
+      endif
+    else
+      let cmd = $VIMRUNTIME . '\diff'
+    endif
+    let cmd = substitute(cmd, '!', '\!', 'g')
+    silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3
+    if exists('l:shxq_sav')
+      let &shellxquote=l:shxq_sav
+    endif
+  endfunction
 endif
 
 " ============================================================================
