@@ -64,7 +64,7 @@ set number
 set cursorline
 set ruler
 set laststatus=2
-set statusline=%F%m%r%h%w\ [F=%Y]\ [L=%l/%L,C=%c]\ [P=%P]\ %{&fenc!=''}?&fenc:&enc}
+set statusline=%F%m%r%h%w\ [F=%Y]\ [L=%l/%L,C=%c]\ %{&fenc!=''?&fenc:&enc}
 set showcmd
 set showmode
 set wildmenu
