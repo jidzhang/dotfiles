@@ -56,8 +56,11 @@ Windows（PowerShell）：
 `common/.vimrc` 是唯一的 vim 配置，适用于 Vim 8+ / Neovim，三系统通用：
 
 - **零插件**。文件浏览用内置 netrw（`<Space>e`），补全用内置 omnifunc。
-- **Leader 为空格**。常用：`<Space>w` 保存、`<Space>feR` 重载配置、
-  `<Space>e` 文件树、`<Space>d/n/p` 切 buffer。
+- **Leader 为反斜杠（`\`），空格兼用**。常用：`\w` 保存、`\feR` 重载配置、
+  `\e` 文件树、`\d/n/p` 切 buffer（空格按同样方式可用）。
+- **终端复制**：开了 `mouse=a` 后，Windows Terminal 里用鼠标框选需按住
+  Shift 穿透；或在 vim 可视模式选中后按 `Ctrl-C`（已映射到 `"*y`）
+  进系统剪贴板。
 - **平台差异**内联判断：gVim 沿用 Windows 按键、macOS 开启 `macmeta`、
   终端自动切换光标形状。
 - **可选 YCM**：默认关闭。不常用了但保留能力——在 `~/.vimrc.local` 写

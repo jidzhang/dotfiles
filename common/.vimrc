@@ -186,10 +186,15 @@ augroup dotfiles_filetype
 augroup END
 
 " ============================================================================
-" 快捷键：Leader = 空格
+" 快捷键：Leader = 反斜杠（\），空格兼用
+" （历史习惯以 \ 为主：\q 退出、\w 保存；空格同样可用）
 " ============================================================================
-let mapleader = "\<Space>"
-let maplocalleader = "\<Space>"
+let mapleader = "\\"
+let maplocalleader = "\\"
+" 空格兼用：空格等同反斜杠，后续按键走同一套 <leader> 映射
+" （新增 <leader> 映射只需写一份，空格自动跟随）
+nmap <Space> \
+xmap <Space> \
 
 " 退出/保存
 nnoremap <leader>w  :w<CR>
@@ -296,6 +301,14 @@ if has('win32')
   cmap <S-Insert> <C-r>+
   " 强制写入（PowerShell 回写）
   cnoremap w!! w !powershell -Command "Set-Content -Path '%' -Value (Get-Content -Raw)"
+endif
+
+" MSYS2 / Git-Bash 终端 vim（win32unix）：has('win32') 为 0，
+" 上面的 win32 习惯按键不生效。单独补可视模式 Ctrl-C 复制选中到系统剪贴板。
+" （终端里 Ctrl-C 默认只会退出可视模式，选中内容哪儿也没去——这就是之前复制失灵的原因。
+" 另：开了 mouse=a 后，Windows Terminal 里用鼠标框选需按住 Shift 穿透。）
+if has('win32unix') && !has('gui_running')
+  vnoremap <C-c> "*y
 endif
 
 " Windows 外部 diff（处理空格路径；内部 diff 可用时不启用）
