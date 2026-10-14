@@ -93,18 +93,22 @@ if has('gui_running')
   endif
 endif
 
-" 终端下插入/普通模式光标形状（xterm 系）
-if !has('gui_running') && &term =~# 'xterm\|screen\|tmux'
-  let &t_SI = "\e[6 q"
-  let &t_EI = "\e[2 q"
-  let &t_SR = "\e[4 q"
-  let &t_ti .= "\e[2 q"
-  let &t_te .= "\e[6 q"
-endif
-
-" Windows 终端（非 GUI）256 色兜底
-if has('win32') && !has('gui_running')
+" 终端光标形状：原生 Windows 控制台 + xterm 系终端
+" 注意：原生 Windows vim 在 cmd/PowerShell 里 TERM 不是 xterm（而是 win32），
+" 必须按 has('win32') 判断，不能只看 &term。
+if !has('gui_running') && has('win32')
   set t_Co=256
+  let &t_SI = "\<Esc>[6 q"    " 插入模式：竖线
+  let &t_EI = "\<Esc>[2 q"    " 普通模式：方块
+  let &t_SR = "\<Esc>[4 q"    " 替换模式：下划线
+  let &t_ti .= "\<Esc>[2 q"   " vim 启动时设为方块
+  let &t_te .= "\<Esc>[6 q"   " 退出 vim 时恢复终端竖线
+elseif !has('gui_running') && &term =~# 'xterm\|screen\|tmux'
+  let &t_SI = "\e[6 q"        " 插入模式：竖线
+  let &t_EI = "\e[2 q"        " 普通模式：方块
+  let &t_SR = "\e[4 q"        " 替换模式：下划线
+  let &t_ti .= "\e[2 q"       " vim 启动时设为方块
+  let &t_te .= "\e[6 q"       " 退出 vim 时恢复终端竖线
 endif
 
 " 恢复上次光标位置
